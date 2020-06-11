@@ -1,33 +1,84 @@
+'use strict';
+
 class CheckoutProductList {
   productsStoreKey = 'cart-products';
 
   constructor(parentElement) {
+    this.productsUrl = '/assets/data/products.json';
     this.el = parentElement;
-    this.getProducts();
-    this.show();
-    this.initListeners();
+    this.load().then((products) => {
+      console.log(products)
+      this.getProducts(products);
+      this.getSumPrice();
+      this.getArray();
+      this.show();
+      this.initListeners();
+    });
   }
 
-  getProducts() {
-    let productsLocalStorage = localStorage.getItem('cart-products');
-    let productsInCart = JSON.parse(productsLocalStorage) || [];
+  load() {
+    return fetch(this.productsUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.data = data;
+        
+        return this.data;
+      })
+      .then((products) => {
+        
+        products.map(product => {
+        const temp = product.price.split(/\B\s/);
+        product.price = temp[1];
+        product.currency = temp[0];
+        console.log(product)
+        return { 
+          ...product,
+          price: temp[1],
+          currency: temp[0]
+        }
+        });
+        console.log(products)
+        return products;
+      })
+  }
+
+  getProducts(products) {
+    
+    const productsLocalStorage = localStorage.getItem('cart-products');
+    const idProductsInCart = JSON.parse(productsLocalStorage) || [];
+    
+    console.log(idProductsInCart)
+      let productsInCart = [];
+      for (let id of idProductsInCart) {
+        productsInCart = products.filter(el => el.id == +id);
+      }
+      console.log(productsInCart);
+  
     return productsInCart;
+    
   }
 
   getSumPrice() {
+    
     const products = this.getProducts();
-    const sum = products
-      .map(item => item.price)
-      .join('')
-      .match(/-?\d+(\.\d+)?/g)
-      .reduce((a, b) => +a + +b, 0)
-      .toFixed(2);
+    const arr = products.map(item => item.price);
 
-    return sum;
+    console.log(arr);
+
+    let sum = 0;
+    for (let item of arr) {
+      sum+= +item;
+    }
+      
+    console.log(sum);
+    return sum.toFixed(2);
+    
   }
 
   getRate(item) {
-
+    
     const stars = new Array(5).fill('').map((value, index) => {
       if (item.rating != null) {
         let modificator = index < item.rating.stars ? 'checked' : 'active';
@@ -44,70 +95,47 @@ class CheckoutProductList {
         </div>
         <p class="rate-amount d-none d-md-block mt-1">${reviews} reviews <p>
     `
-
+    
   }
 
   getPrice(item) {
     return `
     <div class="product-price">
       <p class="mb-0 font-weight-light">Price:</p>
-      <h4 class="col-title price-text mb-2">${item.price}</h4>
+      <h4 class="col-title price-text mb-2">${item.currency} ${item.price}</h4>
     </div>
     `;
   }
 
   getArray() {
+   
     const arrayOfProductsInCart = this.getProducts();
 
-    const counter = arrayOfProductsInCart.reduce(function (obj, item) {
+    const map = arrayOfProductsInCart.reduce(function (obj, item) {
       if (!obj.hasOwnProperty(item.id)) {
-        obj[item.id] = 0;
+        obj[item.id] = item;
+        obj[item.id]['sum'] = 0;
       }
-      obj[item.id]++;
+      obj[item.id]['sum']++;
       return obj;
     }, {});
 
-    const counterObj = Object.keys(counter).map(function (id) {
-      return {id: id, sum: counter[id]};
-    });
+    console.log(map);
 
-    const arrayWithoutRepeat = arrayOfProductsInCart.filter((el, index) => {
-      return index === arrayOfProductsInCart.findIndex(obj => {
-        return JSON.stringify(obj) === JSON.stringify(el);
-      });
-    });
-
-    function merge() {
-      let hash = {}; // временный хэш объектов по свойству id
-      for (let l = 0; l < arguments.length; l++) {
-        const array = arguments[l];
-        if (!array.length) continue;
-        for (let i = 0; i < array.length; i++) {
-          let el = array[i];
-          if (!('id' in el)) continue;
-          let id = el.id;
-          if (!hash[id]) hash[id] = {};
-          for (let key in el) {
-            if (el.hasOwnProperty(key))
-              hash[id][key] = el[key];
-          }
-        }
-      }
-      let result = [];
-      for (let id in hash) {
-        if (hash.hasOwnProperty(id)) {
-          result.push(hash[id]);
-        }
-      }
-      return result;
+    const resultArray = [];
+    for(let obj in map) { 
+      resultArray.push(map[obj]); 
     }
 
-    const resultArray = merge(arrayWithoutRepeat, counterObj);
+    console.log(resultArray)
     return resultArray;
+    
   }
 
   render() {
+
     const array = this.getArray();
+    console.log(array)
     const products = array.map((item) => {
       const rate = this.getRate(item);
       const price = this.getPrice(item);
@@ -173,14 +201,15 @@ class CheckoutProductList {
 
   deleteProduct(id) {
     const products = this.getProducts();
-  
-    const deletedElement = this.el.querySelector(`div[data-product-id='${id}'] > div.quantity > h1`);
 
-    let quantity = deletedElement.innerText;
-    console.log(quantity);
+    const deletedElement = this.el.querySelector(`div[data-product-id='${id}']`);
+  
+    const quantityEl = this.el.querySelector(`div[data-product-id='${id}'] > div.quantity > h1`);
+
+    let quantity = quantityEl.innerText;
     if (quantity  > 1 ) {
       quantity -= 1;
-      deletedElement.innerText = quantity ;
+      quantityEl.innerText = quantity ;
     } else {
       deletedElement.remove();
     }
@@ -193,4 +222,4 @@ class CheckoutProductList {
 
 }
 
-export default CheckoutProductList;
+window.CheckoutProductList = CheckoutProductList;

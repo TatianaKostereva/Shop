@@ -30,7 +30,22 @@ class ProductList {
       })
       .then((data) => {
         this.data = data;
-      });
+        return this.data;
+      })
+      .then((product) => {
+        
+        product.map(product => {
+        const temp = product.price.split(/\B\s/);
+        product.price = temp[1];
+        product.currency = temp[0];
+      
+        return { 
+          product,
+          price: temp[1],
+          currency: temp[0]
+        }
+        })
+      })
   }
 
   getRate(item) {
@@ -56,7 +71,7 @@ class ProductList {
     const oldPriceLabel = item.oldPrice ? `<small className="ml-2">${item.oldPrice}</small>` : '';
 
     return `
-     <p class="card-text price-text discount"><strong>${item.price}</strong>
+     <p class="card-text price-text discount"><strong>${item.currency} ${item.price}</strong>
         ${oldPriceLabel}
      </p>
     `;
@@ -112,16 +127,17 @@ class ProductList {
   }
 
   putProducts(id) {
-
+    
     const productsLocalStorage = localStorage.getItem('cart-products');
+    console.log(productsLocalStorage)
     const productsInCart = JSON.parse(productsLocalStorage) || [];
+    
+    // const productToCart = this.data.find(product => product.id == id);
 
-    const productToCart = this.data.find(product => product.id == id);
-
-    productsInCart.push(productToCart);
+    productsInCart.push(id);
     
     localStorage.setItem('cart-products', JSON.stringify(productsInCart));
   }
 }
 
-export default ProductList;
+window.ProductList = ProductList;
