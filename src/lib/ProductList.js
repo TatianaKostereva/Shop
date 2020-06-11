@@ -140,4 +140,4 @@ class ProductList {
   }
 }
 
-window.ProductList = ProductList;
+export default ProductList;

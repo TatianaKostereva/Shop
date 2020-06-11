@@ -214,7 +214,7 @@ class CheckoutProductList {
       deletedElement.remove();
     }
     
-    const indexOfProductToDelete = products.findIndex(product => product.id == id)
+    const indexOfProductToDelete = products.findIndex(product => product.id == id);
     products.splice(indexOfProductToDelete,1);
   
     localStorage.setItem('cart-products', JSON.stringify(products));
@@ -222,4 +222,4 @@ class CheckoutProductList {
 
 }
 
-window.CheckoutProductList = CheckoutProductList;
+export default CheckoutProductList;
