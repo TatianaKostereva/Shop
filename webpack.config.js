@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/Carousel.js',
+    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'view/scripts'),
         filename: 'start.bundle.js'
