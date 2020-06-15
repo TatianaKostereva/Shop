@@ -1,33 +1,30 @@
-const slides = [
+const arr = [
   {
     id: 0,
     title: 'BEST LAPTOP DEALS',
-    img: './assets/images/default-slide-img.jpg'
+    img: './assets/images/default-slide-img.jpg',
   },
   {
     id: 1,
     title: 'BEST HEADPHONES DEALS',
-    img: './assets/images/default-slide-img.jpg'
+    img: './assets/images/default-slide-img.jpg',
   },
   {
     id: 2,
     title: 'BEST SPEAKERS DEALS',
-    img: './assets/images/default-slide-img.jpg'
-  }
+    img: './assets/images/default-slide-img.jpg',
+  },
 ];
 
 class Carousel {
   constructor(element) {
     this.el = element;
-    this.slides = slides;
-    this.render();
-    this.moveNextSlide();
-    this.movePrevSlide();
-    this.moveByIndicators();
+    this.slides = arr;
+    this.show();
   }
 
   render() {
-    const carousel = this.slides.map(item => `
+    const carousel = this.slides.map((item) => `
     <div class="carousel-item" data-id=${item.id}>
       <img src=${item.img} alt="Activelide">
       <div class="container">
@@ -69,34 +66,32 @@ class Carousel {
     this.el.querySelector('.carousel-indicator').classList.add('active');
   }
 
-
   moveNextSlide() {
-  const nextButton = this.el.querySelector('.carousel-control-next');
+    const nextButton = this.el.querySelector('.carousel-control-next');
 
-    nextButton.addEventListener('click', event => {
-      
-      let activeSlide = this.el.querySelector('.carousel-item.active');
-      let currentSlideIndex = +activeSlide.dataset.id;
-     
+    nextButton.addEventListener('click', () => {
+      const activeSlide = this.el.querySelector('.carousel-item.active');
+      const currentSlideIndex = +activeSlide.dataset.id;
+
       let nextSlideIndex = currentSlideIndex + 1;
-      if (nextSlideIndex == this.slides.length) {
+      if (nextSlideIndex === this.slides.length) {
         nextSlideIndex = 0;
       }
       activeSlide.classList.remove('active');
-      
+
       const slides = this.el.getElementsByClassName('carousel-item');
-      for (let s of slides) {
-        if (+s.dataset.id == nextSlideIndex) {
+      for (const s of slides) {
+        if (+s.dataset.id === nextSlideIndex) {
           s.classList.add('active');
         }
       }
 
-      let activeIndicator = this.el.querySelector('.carousel-indicator.active');
+      const activeIndicator = this.el.querySelector('.carousel-indicator.active');
       activeIndicator.classList.remove('active');
 
       const carouselIndicators = this.el.getElementsByClassName('carousel-indicator');
-      for (let i of carouselIndicators) {
-        if (+i.dataset.slideTo == nextSlideIndex) {
+      for (const i of carouselIndicators) {
+        if (+i.dataset.slideTo === nextSlideIndex) {
           i.classList.add('active');
         }
       }
@@ -104,31 +99,31 @@ class Carousel {
   }
 
   movePrevSlide() {
-  const prevButton = this.el.querySelector('.carousel-control-prev');
+    const prevButton = this.el.querySelector('.carousel-control-prev');
 
-    prevButton.addEventListener('click', event => {
-      let activeSlide = this.el.querySelector('.carousel-item.active');
-      let currentSlideIndex = +activeSlide.dataset.id;
-      
+    prevButton.addEventListener('click', () => {
+      const activeSlide = this.el.querySelector('.carousel-item.active');
+      const currentSlideIndex = +activeSlide.dataset.id;
+
       let prevSlideIndex = currentSlideIndex - 1;
-      if (prevSlideIndex == -1) {
+      if (prevSlideIndex === -1) {
         prevSlideIndex = 2;
       }
       activeSlide.classList.remove('active');
-     
+
       const slides = this.el.getElementsByClassName('carousel-item');
-      for (let s of slides) {
-        if (+s.dataset.id == prevSlideIndex) {
+      for (const s of slides) {
+        if (+s.dataset.id === prevSlideIndex) {
           s.classList.add('active');
         }
       }
 
-      let activeIndicator = this.el.querySelector('.carousel-indicator.active');
+      const activeIndicator = this.el.querySelector('.carousel-indicator.active');
       activeIndicator.classList.remove('active');
 
       const carouselIndicators = this.el.getElementsByClassName('carousel-indicator');
-      for (let i of carouselIndicators) {
-        if (+i.dataset.slideTo == prevSlideIndex) {
+      for (const i of carouselIndicators) {
+        if (+i.dataset.slideTo === prevSlideIndex) {
           i.classList.add('active');
         }
       }
@@ -137,32 +132,38 @@ class Carousel {
 
   moveByIndicators() {
     const indicators = this.el.querySelector('.carousel-indicators');
-  
-    indicators.addEventListener('click', event => {
+
+    indicators.addEventListener('click', (event) => {
       const { target } = event;
-      
-      let currentSlideIndex = +target.dataset.slideTo;
-      let activeIndicator = this.el.querySelector('.carousel-indicator.active');
+
+      const currentSlideIndex = +target.dataset.slideTo;
+      const activeIndicator = this.el.querySelector('.carousel-indicator.active');
       activeIndicator.classList.remove('active');
 
       const carouselIndicators = this.el.getElementsByClassName('carousel-indicator');
-      for (let i of carouselIndicators) {
-        if (+i.dataset.slideTo == currentSlideIndex) {
+      for (const i of carouselIndicators) {
+        if (+i.dataset.slideTo === currentSlideIndex) {
           i.classList.add('active');
         }
       }
 
       const slides = this.el.getElementsByClassName('carousel-item');
-      let activeSlide = this.el.querySelector('.carousel-item.active');
+      const activeSlide = this.el.querySelector('.carousel-item.active');
       activeSlide.classList.remove('active');
-      for (let s of slides) {
-        if (+s.dataset.id == currentSlideIndex) {
+      for (const s of slides) {
+        if (+s.dataset.id === currentSlideIndex) {
           s.classList.add('active');
         }
       }
     });
   }
+
+  show() {
+    this.render();
+    this.moveNextSlide();
+    this.movePrevSlide();
+    this.moveByIndicators();
+  }
 }
 
-// Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
 export default Carousel;
