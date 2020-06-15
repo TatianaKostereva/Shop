@@ -661,6 +661,7 @@ form button[type="submit"]:not(.btn-send) {
 
 .rate {
     display: flex;
+    width: 200px;
     flex-wrap: wrap;
     flex-direction: row;
 }
