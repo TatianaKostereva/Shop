@@ -1,10 +1,7 @@
 class Menu {
-  
   constructor(element) {
     this.element = element;
-    this.render();
-    this.dropdownMenu();
-    this.darkenBackdrop();
+    this.show();
   }
 
   render() {
@@ -13,20 +10,15 @@ class Menu {
       <li class="list-group-item dropdown">
         <a class="nav-link dropdown-toggle" id="cameraphotos">Camera &amp; Photo</a>
         <ul class="dropdown-menu">   
-          
          <li data-id="cameraphotos_accessories" class="dropdown-item"><a>Accessories</a></li>
-      
         </ul>
       </li>
     
       <li class="list-group-item dropdown">
         <a class="nav-link dropdown-toggle" id="cinema">Home Cinema, TV &amp; Video</a>
         <ul class="dropdown-menu">   
-          
          <li data-id="cinema_audio" class="dropdown-item"><a>Audio</a></li>
-      
          <li data-id="cinema_video" class="dropdown-item"><a>Video</a></li>
-      
         </ul>
       </li>
     </ul>
@@ -38,13 +30,12 @@ class Menu {
   dropdownMenu() {
     const mainMenuItems = this.element.querySelectorAll('.list-group-item');
 
-    for (let item of mainMenuItems) {
-
-      item.addEventListener('pointerenter', event => {
+    for (const item of mainMenuItems) {
+      item.addEventListener('pointerenter', () => {
         item.querySelector('.dropdown-menu').classList.add('show');
       });
 
-      item.addEventListener('pointerleave', event => {
+      item.addEventListener('pointerleave', () => {
         item.querySelector('.dropdown-menu').classList.remove('show');
       });
     }
@@ -53,19 +44,24 @@ class Menu {
   darkenBackdrop() {
     const mainMenuItems = this.element.querySelectorAll('.list-group-item');
 
-    for (let item of mainMenuItems) {
+    for (const item of mainMenuItems) {
       const backdrop = document.querySelector('.backdrop');
 
-      item.addEventListener('pointerenter', event => {
+      item.addEventListener('pointerenter', () => {
         backdrop.classList.add('show');
       });
-      
-      item.addEventListener('pointerleave', event => {
+
+      item.addEventListener('pointerleave', () => {
         backdrop.classList.remove('show');
       });
     }
   }
+
+  show() {
+    this.render();
+    this.dropdownMenu();
+    this.darkenBackdrop();
+  }
 }
 
-// Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
 export default Menu;
