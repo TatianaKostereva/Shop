@@ -97,7 +97,7 @@ class ProductList {
   putProducts(id) {
     const productsLocalStorage = localStorage.getItem('cart-products');
     const productsInCart = JSON.parse(productsLocalStorage) || [];
-    productsInCart.push(id);
+    productsInCart.push(+id);
     localStorage.setItem('cart-products', JSON.stringify(productsInCart));
   }
 }
