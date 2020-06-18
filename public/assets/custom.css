@@ -1324,3 +1324,21 @@ form button[type="submit"]:not(.btn-send) {
     font-weight: 400;
     font-size: 18px;
 }
+
+.btn-pag {
+    background: white;
+    width: 30px;
+    height: 30px;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+    -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+    border-radius: 4px;
+}
+
+.btn-pag:active {
+    background: orange;
+}
+
+.active {
+    background: orange;
+}
