@@ -22,6 +22,7 @@ loadProduct('/assets/data/products.json').then((products) => {
 
   const checkoutProductListWrapper = document.querySelector('.product-list-box-wrapper');
   if (checkoutProductListWrapper) {
-    new CheckoutProductList(checkoutProductListWrapper, products);
+    const checkout = new CheckoutProductList(checkoutProductListWrapper, products);
+    checkout.init();
   }
 });
