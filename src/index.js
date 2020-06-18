@@ -1,28 +1,21 @@
-import Carousel from './lib/Carousel';
-import Menu from './lib/Menu';
-import loadProduct from './lib/loadProduct';
-import ProductList from './lib/ProductList';
-import CheckoutProductList from './lib/CheckoutProductList';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const menuWrapper = document.querySelector('.main-menu');
-if (menuWrapper) {
-  new Menu(menuWrapper);
-}
+import Rate from './components/Rate/Rate';
+import loadProduct from '@/lib/loadProduct';
 
-const carouselWrapper = document.querySelector('.carousel');
-if (carouselWrapper) {
-  new Carousel(carouselWrapper);
-}
-loadProduct('/assets/data/products.json').then((products) => {
-  const productListWrapper = document.querySelector('.product-list');
-  if (productListWrapper) {
-    const productList = new ProductList(productListWrapper, products);
-    productList.show();
-  }
+loadProduct('/assets/data/products.json').then(products => {
 
-  const checkoutProductListWrapper = document.querySelector('.product-list-box-wrapper');
-  if (checkoutProductListWrapper) {
-    const checkout = new CheckoutProductList(checkoutProductListWrapper, products);
-    checkout.init();
-  }
-});
+  ReactDOM.render(
+    <div>
+      <Rate rating={products[0].rating} />
+      <Rate rating={products[1].rating} />
+      <Rate rating={products[2].rating} />
+      <Rate />
+    </div>
+    ,
+    document.getElementById('root'),
+  );
+})
+
+

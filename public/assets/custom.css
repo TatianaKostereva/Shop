@@ -1335,10 +1335,7 @@ form button[type="submit"]:not(.btn-send) {
     border-radius: 4px;
 }
 
-.btn-pag:active {
+.btn-pag.active {
     background: orange;
 }
 
-.btn-pag .active {
-    background: orange;
-}

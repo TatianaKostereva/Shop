@@ -1,14 +1,15 @@
 class CheckoutProductList {
-  constructor(parentElement, products) {
+  constructor(parentElement, products, size = 3) {
     this.el = parentElement;
     this.products = products;
     this.page = 0;
+    this.size = size;
   }
 
   init = () => {
     this.show();
     this.initListeners();
-  }
+  };
 
   getProducts = () => {
     const productsLocalStorage = localStorage.getItem('cart-products');
@@ -40,7 +41,7 @@ class CheckoutProductList {
     }
 
     return sum.toFixed(2);
-  }
+  };
 
   getRate = (item) => {
     const stars = new Array(5).fill('').map((value, index) => {
@@ -58,29 +59,34 @@ class CheckoutProductList {
         </div>
         <p class="rate-amount d-none d-md-block mt-1">${reviews} reviews <p>
     `;
-  }
+  };
 
   getPrice = (item) => `
     <div class="product-price">
       <p class="mb-0 font-weight-light">Price:</p>
       <h4 class="col-title price-text mb-2">${item.currency} ${item.price}</h4>
     </div>
-    `
+    `;
 
   getProductsByPage = () => {
     const productsInCart = this.getProducts();
-    const from = this.page * 3;
-    const to = (this.page + 1) * 3;
+    const from = this.page * this.size;
+    const to = (this.page + 1) * this.size;
     return productsInCart.slice(from, to);
-  }
+  };
 
   getButton = () => {
     const array2 = this.getProducts();
-    const onPage = 3;
+    const onPage = this.size;
     let buttons = '';
 
     for (let i = 0; i < Math.ceil(array2.length / onPage); i++) {
-      buttons += `<button class="btn-pag active" data-page=${i}>${i + 1}</button>`;
+      let className = 'btn-pag ';
+      if (this.page === i) { // 3
+        className += 'active';
+      }
+
+      buttons += `<button class="${className}" data-page=${i}>${i + 1}</button>`;
     }
 
     return `
@@ -88,7 +94,7 @@ class CheckoutProductList {
       ${buttons}
     </div>
     `;
-  }
+  };
 
   renderListOfProducts = () => {
     const products = this.getProductsByPage();
@@ -163,7 +169,7 @@ class CheckoutProductList {
 
       const { page } = target.dataset;
 
-      this.page = page;
+      this.page = +page;
       this.show();
       // const buttons = document.querySelector('.btn-pag');
       const blocks = target.closest('.active');

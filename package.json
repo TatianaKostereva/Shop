@@ -5,14 +5,16 @@
   "author": "Зубков Валерий Павлович <v.zubkov@bssys.com>",
   "license": "MIT",
   "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.1.0",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-import-resolver-webpack": "^0.12.1",
