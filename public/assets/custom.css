@@ -1339,6 +1339,6 @@ form button[type="submit"]:not(.btn-send) {
     background: orange;
 }
 
-.active {
+.btn-pag .active {
     background: orange;
 }
