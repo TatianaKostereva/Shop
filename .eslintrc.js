@@ -18,8 +18,11 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
 
-    'react/jsx-filename-extension' : 0,
+    'react/jsx-filename-extension': 0,
     'comma-dangle': ['error', 'always-multiline'],
+
+    'arrow-body-style': 'always',
+    'react/prop-types': 0,
   },
   settings: {
     'import/resolver': {
