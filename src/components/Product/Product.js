@@ -1,29 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Rate from '@/components/Rate/Rate';
-import CartService from '@/services/CartService';
+import DBProductsContext from '@/db/products';
 
-const Product = ({ item }) => {
+const Product = ({ id, deleteProduct }) => {
+  const product = useContext(DBProductsContext).find(product => {
+    return product.id === id;
+  });
 
   return (
-    <div key={item.id} data-product-id={item.id} className="product-wrapper box-inner-col description-col">
+    <div key={product.id} data-product-id={product.id} className="product-wrapper box-inner-col description-col">
       <div className="product-image-container">
-        <img className="product-image" src={item.imageUrl} alt="img" />
+        <img className="product-image" src={product.imageUrl} alt="img" />
       </div>
 
       <div className="product-description">
         <h4 className="col-title mb-2">
-          {item.title}
+          {product.title}
         </h4>
-        <Rate rating={item.rating} />
+        <Rate rating={product.rating} />
       </div>
       <div className="product-price">
         <p className="mb-0 font-weight-light">Price:</p>
-        <h4 className="col-title price-text mb-2">{item.currency} {item.price}</h4>
+        <h4 className="col-title price-text mb-2">{product.currency} {product.price}</h4>
       </div>
       <div className="quantity">
         <p>Quantity:</p>
         <h1>
-          {item.sum}
+          {product.sum}
         </h1>
       </div>
       <div className="product-remove-button-wrapper">
@@ -31,10 +34,7 @@ const Product = ({ item }) => {
           type="button"
           data-button-role="checkout-remove-product"
           onClick={() => {
-            if (confirm('Вы уверены, что хотите удалить этот товар из корзины?') !== true) {
-              return false;
-            }
-            CartService.deleteProduct(item.id);
+            deleteProduct(product.id);
           }}
           className="product-remove-button"
         >

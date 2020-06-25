@@ -1,11 +1,14 @@
 const observers = [];
 
-const getProducts = (products = []) => {
+const getProductsId = () => {
   const productsLocalStorage = localStorage.getItem('cart-products');
-  const idProductsInCart = JSON.parse(productsLocalStorage) || [];
 
+  return JSON.parse(productsLocalStorage) || [];
+};
+
+const getProducts = (idProductsInCart, productsData = []) => {
   const listOfProducts = idProductsInCart.map((id) => {
-    return products.find((product) => product.id == id);
+    return productsData.find((product) => product.id == id);
   });
 
   const productsInCart = listOfProducts.reduce((obj, item) => {
@@ -39,6 +42,7 @@ const setObserver = (observer) => {
 const CartService = {
   getProducts: getProducts,
   deleteProduct: deleteProduct,
+  getProductsId: getProductsId,
 
   setObserver: setObserver
 };

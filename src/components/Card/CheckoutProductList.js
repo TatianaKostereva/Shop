@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Product from '@/components/Product/Product';
-import CartService from "@/services/CartService";
+import CheckoutSumPrice from '@/components/CheckoutSumPrice/CheckoutSumPrice';
 
 class CheckoutProductList extends React.Component {
   constructor(props) {
@@ -10,16 +10,7 @@ class CheckoutProductList extends React.Component {
     this.state = {
       page: 0,
     };
-    this.initListenersButton();
   }
-
-  getSumPrice = () => {
-    const sum = (a, b) => +a + +b;
-    return this.props.products
-      .map((value) => value['price'])
-      .reduce(sum, 0)
-      .toFixed(2);
-  };
 
   getProductsByPage = () => {
     const productsInCart = this.props.products;
@@ -38,7 +29,7 @@ class CheckoutProductList extends React.Component {
         className += 'active';
       }
 
-      buttons.push(<button className={className} data-page={i}>{i + 1}</button>);
+      buttons.push(<button onClick={this.goToPage} className={className} data-page={i}>{i + 1}</button>);
     }
 
     return (
@@ -50,35 +41,27 @@ class CheckoutProductList extends React.Component {
 
   render = () => {
     const products = this.getProductsByPage();
-
-    const sumPrice = this.getSumPrice();
     const buttons = this.getButton();
 
     return (
       <div>
         <div className="product-list-box">
           {products.map((item) => {
-            return <Product item={item} />
+            return <Product id={item.id} deleteProduct={this.props.deleteProduct}/>
           })}
         </div>
-        <div className="order-value"> Order value: € {sumPrice}</div>
+        <CheckoutSumPrice products={products} />
         {buttons}
       </div>
     )
   };
 
-  initListenersButton = () => {
-    document.body.addEventListener('click', (event) => {
-      const { target } = event;
-      if (!event.target.matches('.btn-pag')) return;
+  goToPage = (event) => {
+    event.preventDefault();
+    const { page } = event.target.dataset;
 
-      const { page } = target.dataset;
-
-      this.setState({page: +page});
-      CartService.setObserver(render);
-    });
+    this.setState({page: +page});
   }
-
 }
 
 export default CheckoutProductList;

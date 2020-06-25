@@ -5,8 +5,8 @@ import Carousel from './lib/Carousel';
 import Menu from './lib/Menu';
 import loadProduct from './lib/loadProduct';
 import ProductList from './lib/ProductList';
-import CheckoutProductList from './components/Card/CheckoutProductList';
-import CartService from '@/services/CartService';
+import CartPage from '@/page/CartPage';
+import DBProductsContext from '@/db/products';
 
 const menuWrapper = document.querySelector('.main-menu');
 if (menuWrapper) {
@@ -18,26 +18,20 @@ if (carouselWrapper) {
   new Carousel(carouselWrapper);
 }
 
-loadProduct('/assets/data/products.json').then((productsList) => {
+loadProduct('/assets/data/products.json').then((productsData) => {
   const productListWrapper = document.querySelector('.product-list');
   if (productListWrapper) {
-    const productList = new ProductList(productListWrapper, productsList);
+    const productList = new ProductList(productListWrapper, productsData);
     productList.show();
   }
 
   const checkoutProductListWrapper = document.querySelector('.product-list-box-wrapper');
   if (checkoutProductListWrapper) {
-    const render = () => {
-      const products = [...CartService.getProducts(productsList)];
-      console.log(products);
-      ReactDOM.render(
-        <CheckoutProductList products={products} pageSize={3} />,
-        checkoutProductListWrapper
-      )
-    };
-
-    render();
-
-    CartService.setObserver(render);
+    ReactDOM.render(
+      <DBProductsContext.Provider value={productsData}>
+        <CartPage productsData={productsData} pageSize={3} />
+      </DBProductsContext.Provider>,
+      checkoutProductListWrapper
+    )
   }
 });
