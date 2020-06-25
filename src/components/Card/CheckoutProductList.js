@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Product from '@/components/Product/Product';
+import CartService from "@/services/CartService";
 
 class CheckoutProductList extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class CheckoutProductList extends React.Component {
       const { page } = target.dataset;
 
       this.setState({page: +page});
-      this.render();
+      CartService.setObserver(render);
     });
   }
 
