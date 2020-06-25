@@ -5,7 +5,7 @@ import CartService from '@/services/CartService';
 const Product = ({ item }) => {
 
   return (
-    <div data-product-id={item.id} className="product-wrapper box-inner-col description-col">
+    <div key={item.id} data-product-id={item.id} className="product-wrapper box-inner-col description-col">
       <div className="product-image-container">
         <img className="product-image" src={item.imageUrl} alt="img" />
       </div>
@@ -22,7 +22,6 @@ const Product = ({ item }) => {
       </div>
       <div className="quantity">
         <p>Quantity:</p>
-        {' '}
         <h1>
           {item.sum}
         </h1>

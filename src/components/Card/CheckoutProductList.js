@@ -6,7 +6,10 @@ class CheckoutProductList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.page = 0;
+    this.state = {
+      page: 0,
+    };
+    this.initListenersButton();
   }
 
   getSumPrice = () => {
@@ -19,8 +22,8 @@ class CheckoutProductList extends React.Component {
 
   getProductsByPage = () => {
     const productsInCart = this.props.products;
-    const from = this.page * this.props.pageSize;
-    const to = (this.page + 1) * this.props.pageSize;
+    const from = this.state.page * this.props.pageSize;
+    const to = (this.state.page + 1) * this.props.pageSize;
 
     return productsInCart.slice(from, to);
   };
@@ -30,7 +33,7 @@ class CheckoutProductList extends React.Component {
     for (let i = 0; i < Math.ceil(this.props.products.length / this.props.pageSize); i++) {
       let className = 'btn-pag ';
 
-      if (this.page === i) {
+      if (this.state.page === i) {
         className += 'active';
       }
 
@@ -51,19 +54,18 @@ class CheckoutProductList extends React.Component {
     const buttons = this.getButton();
 
     return (
-      <>
+      <div>
         <div className="product-list-box">
           {products.map((item) => {
             return <Product item={item} />
-          })};
+          })}
         </div>
-        <div className="order-value"> Order value: € ${sumPrice}</div>
-        ${buttons}
-      </>
+        <div className="order-value"> Order value: € {sumPrice}</div>
+        {buttons}
+      </div>
     )
   };
 
-  /*
   initListenersButton = () => {
     document.body.addEventListener('click', (event) => {
       const { target } = event;
@@ -71,18 +73,11 @@ class CheckoutProductList extends React.Component {
 
       const { page } = target.dataset;
 
-      this.page = +page;
-      this.show();
-      // const buttons = document.querySelector('.btn-pag');
-      const blocks = target.closest('.active');
-      // const blocks = target.closest('.btn-pag');
-      blocks.classList.remove('active');
-      // blocks.classList.add('active');
+      this.setState({page: +page});
+      this.render();
     });
   }
 
-
-  */
 }
 
 export default CheckoutProductList;
