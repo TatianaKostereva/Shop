@@ -19,10 +19,15 @@ if (carouselWrapper) {
 }
 
 loadProduct('/assets/data/products.json').then((productsData) => {
+
   const productListWrapper = document.querySelector('.product-list');
   if (productListWrapper) {
-    const productList = new ProductList(productListWrapper, productsData);
-    productList.show();
+    ReactDOM.render(
+    < DBProductsContext.Provider value = {productsData} >
+        < ProductList productsData = {productsData} />
+    </DBProductsContext.Provider>,
+    productListWrapper
+    )
   }
 
   const checkoutProductListWrapper = document.querySelector('.product-list-box-wrapper');

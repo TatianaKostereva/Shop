@@ -35,6 +35,16 @@ const deleteProduct = (productId) => {
   observers.forEach((observer) => observer())
 };
 
+const putProducts = (id) => {
+  if (confirm('Вы уверены, что хотите добавить этот товар в корзину?') !== true) {
+    return false;
+  }
+  const productsLocalStorage = localStorage.getItem('cart-products');
+  const productsInCart = JSON.parse(productsLocalStorage) || [];
+  productsInCart.push(+id);
+  localStorage.setItem('cart-products', JSON.stringify(productsInCart));
+}
+
 const setObserver = (observer) => {
   observers.push(observer)
 };
@@ -43,6 +53,7 @@ const CartService = {
   getProducts: getProducts,
   deleteProduct: deleteProduct,
   getProductsId: getProductsId,
+  putProducts: putProducts,
 
   setObserver: setObserver
 };
