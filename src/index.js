@@ -10,7 +10,12 @@ import DBProductsContext from '@/db/products';
 
 const menuWrapper = document.querySelector('.main-menu');
 if (menuWrapper) {
-  new Menu(menuWrapper);
+  ReactDOM.render(
+  < DBProductsContext.Provider>
+  < Menu />
+  < /DBProductsContext.Provider>,
+  menuWrapper
+  )
 }
 
 const carouselWrapper = document.querySelector('.carousel');

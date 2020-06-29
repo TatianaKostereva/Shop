@@ -1,67 +1,48 @@
-class Menu {
-  constructor(element) {
-    this.element = element;
-    this.show();
+import React, { useContext } from 'react';
+
+class Menu extends React.Component {
+  constructor(props) {
+    super(props);
   }
 
   render() {
-    const template = `
-    <ul class="list-group sidebar">
-      <li class="list-group-item dropdown">
-        <a class="nav-link dropdown-toggle" id="cameraphotos">Camera &amp; Photo</a>
-        <ul class="dropdown-menu">   
-         <li data-id="cameraphotos_accessories" class="dropdown-item"><a>Accessories</a></li>
+    return (
+    <ul className ="list-group sidebar">
+      <li className="list-group-item dropdown" onPointerEnter = {this.showDropdownMenu} onPointerLeave = {this.hideDropdownMenu}>
+        <a className="nav-link dropdown-toggle" id="cameraphotos">Camera &amp; Photo</a>
+        <ul className="dropdown-menu">
+         <li data-id="cameraphotos_accessories" className="dropdown-item"><a>Accessories</a></li>
         </ul>
       </li>
     
-      <li class="list-group-item dropdown">
-        <a class="nav-link dropdown-toggle" id="cinema">Home Cinema, TV &amp; Video</a>
-        <ul class="dropdown-menu">   
-         <li data-id="cinema_audio" class="dropdown-item"><a>Audio</a></li>
-         <li data-id="cinema_video" class="dropdown-item"><a>Video</a></li>
+      <li className="list-group-item dropdown" onPointerEnter = {this.showDropdownMenu} onPointerLeave = {this.hideDropdownMenu}>
+        <a className="nav-link dropdown-toggle" id="cinema">Home Cinema, TV &amp; Video</a>
+        <ul className="dropdown-menu">
+         <li data-id="cinema_audio" className="dropdown-item"><a>Audio</a></li>
+         <li data-id="cinema_video" className="dropdown-item"><a>Video</a></li>
         </ul>
       </li>
     </ul>
-    `;
-
-    this.element.innerHTML = template;
+    )
   }
 
-  dropdownMenu() {
-    const mainMenuItems = this.element.querySelectorAll('.list-group-item');
+  showDropdownMenu = (event) => {
+    event.preventDefault();
+    event.currentTarget.querySelector('.dropdown-menu').classList.add('show');
 
-    for (const item of mainMenuItems) {
-      item.addEventListener('pointerenter', () => {
-        item.querySelector('.dropdown-menu').classList.add('show');
-      });
-
-      item.addEventListener('pointerleave', () => {
-        item.querySelector('.dropdown-menu').classList.remove('show');
-      });
-    }
+    const backdrop = document.querySelector('.backdrop');
+    backdrop.classList.add('show');
   }
 
-  darkenBackdrop() {
-    const mainMenuItems = this.element.querySelectorAll('.list-group-item');
+  hideDropdownMenu = (event) => {
+    event.preventDefault();
+    event.currentTarget.querySelector('.dropdown-menu').classList.remove('show');
 
-    for (const item of mainMenuItems) {
-      const backdrop = document.querySelector('.backdrop');
-
-      item.addEventListener('pointerenter', () => {
-        backdrop.classList.add('show');
-      });
-
-      item.addEventListener('pointerleave', () => {
-        backdrop.classList.remove('show');
-      });
-    }
+    const backdrop = document.querySelector('.backdrop');
+    backdrop.classList.remove('show');
   }
 
-  show() {
-    this.render();
-    this.dropdownMenu();
-    this.darkenBackdrop();
-  }
 }
 
 export default Menu;
+
