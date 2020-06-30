@@ -18,7 +18,7 @@ class ProductList extends React.Component {
            <h3 className="section-title">Top Recommendations for You</h3>
            <div className="row homepage-cards">
               {products.map((item) => {
-                return <ProductListView id={item.id} />
+                return <ProductListView product={item} />
               })}
            </div>
         </div>

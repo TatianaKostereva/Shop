@@ -4,10 +4,7 @@ import Price from '@/components/Price/Price';
 import DBProductsContext from '@/db/products';
 import CartService from '@/services/CartService';
 
-const ProductListView = ({ id }) => {
-    const product = useContext(DBProductsContext).find(product => {
-        return product.id === id;
-    });
+const ProductListView = ({ product }) => {
 
     return (
         <div key={product.id} data-product-id={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">
