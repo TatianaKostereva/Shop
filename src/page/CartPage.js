@@ -1,44 +1,30 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import CartService from '@/services/CartService';
 import CheckoutProductList from '@/components/Card/CheckoutProductList';
+import EmptyLayout from '@/components/ui/EmptyLayout';
+import DBProductsContext from '@/db/products';
+import { DBCartContext } from '@/db/DBCart';
 
-class CartPage extends React.Component {
-  constructor(props) {
-    super(props);
+const CartPage = () => {
+  const productsData = useContext(DBProductsContext);
+  const cart = useContext(DBCartContext);
+  const products = CartService.getProducts(cart.products, productsData);
 
-    this.state = {
-      cartIds: CartService.getProductsId(),
-    };
-  }
-
-  render = () => {
-    const products = CartService.getProducts(this.state.cartIds, this.props.productsData);
-
-    return (
-      <CheckoutProductList
-        products={products}
-        pageSize={3}
-        deleteProduct={this.deleteProduct}
-      />
-
-    )
-  };
-
-  deleteProduct = (id) => {
-    if (confirm('Вы уверены, что хотите удалить этот товар из корзины?') !== true) {
-      return false;
-    }
-
-    const indexOfProductToDelete = this.state.cartIds.findIndex((productId) => productId == id);
-    const newCartIds = [...this.state.cartIds];
-    newCartIds.splice(indexOfProductToDelete, 1);
-
-    this.setState({
-      cartIds: newCartIds,
-    });
-    localStorage.setItem('cart-products', JSON.stringify(newCartIds));
-  }
-}
+  return (
+    <EmptyLayout >
+      <h3 className="h5 mb-4 mt-4 text-md-center">Your order</h3>
+      <div className="alert alert-primary" role="alert">
+        Your order has been confirmed. The confirmation email is sent to you address
+      </div>
+      <div className="product-list-box-wrapper">
+        <CheckoutProductList
+          products={products}
+          pageSize={3}
+        />
+      </div>
+    </EmptyLayout>
+  )
+};
 
 export default CartPage;

@@ -47,7 +47,7 @@ class CheckoutProductList extends React.Component {
       <div>
         <div className="product-list-box">
           {products.map((item) => {
-            return <Product id={item.id} deleteProduct={this.props.deleteProduct}/>
+            return <Product id={item.id} />
           })}
         </div>
         <CheckoutSumPrice products={products} />

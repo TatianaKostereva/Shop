@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 class Menu extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class Menu extends React.Component {
 
     const backdrop = document.querySelector('.backdrop');
     backdrop.classList.add('show');
-  }
+  };
 
   hideDropdownMenu = (event) => {
     event.preventDefault();
@@ -40,8 +40,7 @@ class Menu extends React.Component {
 
     const backdrop = document.querySelector('.backdrop');
     backdrop.classList.remove('show');
-  }
-
+  };
 }
 
 export default Menu;
