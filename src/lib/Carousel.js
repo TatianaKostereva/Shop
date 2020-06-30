@@ -1,162 +1,102 @@
-const arr = [
-  {
-    id: 0,
-    title: 'BEST LAPTOP DEALS',
-    img: './assets/images/default-slide-img.jpg',
-  },
-  {
-    id: 1,
-    title: 'BEST HEADPHONES DEALS',
-    img: './assets/images/default-slide-img.jpg',
-  },
-  {
-    id: 2,
-    title: 'BEST SPEAKERS DEALS',
-    img: './assets/images/default-slide-img.jpg',
-  },
-];
+import React, { useContext } from 'react';
+import CarouselSlides from "@/components/CarouselSlides/CarouselSlides";
 
-class Carousel {
-  constructor(element) {
-    this.el = element;
-    this.slides = arr;
-    this.show();
+class Carousel extends React.Component {
+  constructor(props) {
+    super(props);
   }
 
-  render() {
-    const carousel = this.slides.map((item) => `
-    <div class="carousel-item" data-id=${item.id}>
-      <img src=${item.img} alt="Activelide">
-      <div class="container">
-        <div class="carousel-caption">
-            <h3 class="h1">${item.title}</h3>
-            <div>
-                <a class="btn" href="#" role="button">
-                    View all DEALS
-                    <img src="assets/icons/icon-angle-white.svg" class="ml-3" alt="">
-                </a>
-            </div>
-        </div>
-      </div>
-    </div>
-    `).join('');
 
-    this.el.innerHTML = `
-    <div id="mainCarousel" class="main-carousel carousel slide">
-    <ol class="carousel-indicators">
-        <li data-target="#mainCarousel" data-slide-to="0" class="carousel-indicator"></li>
-        <li data-target="#mainCarousel" data-slide-to="1" class="carousel-indicator"></li>
-        <li data-target="#mainCarousel" data-slide-to="2" class="carousel-indicator"></li>
+  render = () => {
+    const carousel = this.props.slides;
+
+    return (
+    <div id="mainCarousel" className="main-carousel carousel slide">
+    <ol className="carousel-indicators" onClick = {this.moveByIndicators}>
+        <li data-target="#mainCarousel" data-slide-to="0" className="carousel-indicator active"></li>
+        <li data-target="#mainCarousel" data-slide-to="1" className="carousel-indicator"></li>
+        <li data-target="#mainCarousel" data-slide-to="2" className="carousel-indicator"></li>
     </ol>
-    <div class="carousel-inner">
-    ${carousel}
+    <div className="carousel-inner">
+          {carousel.map((item) => {
+              return <CarouselSlides carouselItem={item} />
+          })}
     </div>
-
-    <button class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+    <button className="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev" onClick= {this.movePrevSlide}>
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="sr-only">Previous</span>
     </button>
-    <button class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+    <button className="carousel-control-next" href="#mainCarousel" role="button" data-slide="next" onClick= {this.moveNextSlide}>
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="sr-only">Next</span>
     </button>
     </div>
-    `;
-    this.el.querySelector('.carousel-item').classList.add('active');
-    this.el.querySelector('.carousel-indicator').classList.add('active');
+    )
   }
 
-  moveNextSlide() {
-    const nextButton = this.el.querySelector('.carousel-control-next');
+  moveNextSlide = () => {
 
-    nextButton.addEventListener('click', () => {
-      const activeSlide = this.el.querySelector('.carousel-item.active');
+      const activeSlide = document.querySelector('.carousel-item.active');
       const currentSlideIndex = +activeSlide.dataset.id;
 
       let nextSlideIndex = currentSlideIndex + 1;
-      if (nextSlideIndex === this.slides.length) {
+      if (nextSlideIndex ===  this.props.slides.length) {
         nextSlideIndex = 0;
       }
-      activeSlide.classList.remove('active');
 
-      const slides = this.el.getElementsByClassName('carousel-item');
-      for (const s of slides) {
-        if (+s.dataset.id === nextSlideIndex) {
-          s.classList.add('active');
-        }
-      }
-
-      const activeIndicator = this.el.querySelector('.carousel-indicator.active');
-      activeIndicator.classList.remove('active');
-
-      const carouselIndicators = this.el.getElementsByClassName('carousel-indicator');
-      for (const i of carouselIndicators) {
-        if (+i.dataset.slideTo === nextSlideIndex) {
-          i.classList.add('active');
-        }
-      }
-    });
+      this.showActiveSlide(nextSlideIndex);
+      this.showActiveIndicator(nextSlideIndex);
   }
 
-  movePrevSlide() {
-    const prevButton = this.el.querySelector('.carousel-control-prev');
-
-    prevButton.addEventListener('click', () => {
-      const activeSlide = this.el.querySelector('.carousel-item.active');
+  movePrevSlide = () => {
+      const activeSlide = document.querySelector('.carousel-item.active');
       const currentSlideIndex = +activeSlide.dataset.id;
 
       let prevSlideIndex = currentSlideIndex - 1;
       if (prevSlideIndex === -1) {
         prevSlideIndex = 2;
       }
-      activeSlide.classList.remove('active');
 
-      const slides = this.el.getElementsByClassName('carousel-item');
-      for (const s of slides) {
-        if (+s.dataset.id === prevSlideIndex) {
-          s.classList.add('active');
-        }
-      }
-
-      const activeIndicator = this.el.querySelector('.carousel-indicator.active');
-      activeIndicator.classList.remove('active');
-
-      const carouselIndicators = this.el.getElementsByClassName('carousel-indicator');
-      for (const i of carouselIndicators) {
-        if (+i.dataset.slideTo === prevSlideIndex) {
-          i.classList.add('active');
-        }
-      }
-    });
+      this.showActiveSlide(prevSlideIndex);
+      this.showActiveIndicator(prevSlideIndex);
   }
 
-  moveByIndicators() {
-    const indicators = this.el.querySelector('.carousel-indicators');
 
-    indicators.addEventListener('click', (event) => {
+  moveByIndicators = (event) =>  {
       const { target } = event;
-
       const currentSlideIndex = +target.dataset.slideTo;
-      const activeIndicator = this.el.querySelector('.carousel-indicator.active');
+
+      this.showActiveIndicator(currentSlideIndex);
+      this.showActiveSlide(currentSlideIndex);
+  }
+
+  showActiveSlide = (slide) => {
+      const activeSlide = document.querySelector('.carousel-item.active');
+      activeSlide.classList.remove('active');
+
+      const element = document.querySelector('.carousel');
+
+      const slides = element.getElementsByClassName('carousel-item');
+      for (const s of slides) {
+          if (+s.dataset.id === slide) {
+              s.classList.add('active');
+          }
+      }
+  }
+
+  showActiveIndicator = (slide) => {
+      const element = document.querySelector('.carousel');
+      const activeIndicator = element.querySelector('.carousel-indicator.active');
       activeIndicator.classList.remove('active');
 
-      const carouselIndicators = this.el.getElementsByClassName('carousel-indicator');
+      const carouselIndicators = element.getElementsByClassName('carousel-indicator');
       for (const i of carouselIndicators) {
-        if (+i.dataset.slideTo === currentSlideIndex) {
-          i.classList.add('active');
-        }
+          if (+i.dataset.slideTo === slide) {
+              i.classList.add('active');
+          }
       }
-
-      const slides = this.el.getElementsByClassName('carousel-item');
-      const activeSlide = this.el.querySelector('.carousel-item.active');
-      activeSlide.classList.remove('active');
-      for (const s of slides) {
-        if (+s.dataset.id === currentSlideIndex) {
-          s.classList.add('active');
-        }
-      }
-    });
   }
+
 
   show() {
     this.render();

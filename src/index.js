@@ -8,20 +8,43 @@ import ProductList from './lib/ProductList';
 import CartPage from '@/page/CartPage';
 import DBProductsContext from '@/db/products';
 
+const arr = [
+  {
+    id: 0,
+    title: 'BEST LAPTOP DEALS',
+    img: './assets/images/default-slide-img.jpg',
+  },
+  {
+    id: 1,
+    title: 'BEST HEADPHONES DEALS',
+    img: './assets/images/default-slide-img.jpg',
+  },
+  {
+    id: 2,
+    title: 'BEST SPEAKERS DEALS',
+    img: './assets/images/default-slide-img.jpg',
+  },
+];
+
 const menuWrapper = document.querySelector('.main-menu');
 if (menuWrapper) {
   ReactDOM.render(
-  < DBProductsContext.Provider>
-  < Menu />
-  < /DBProductsContext.Provider>,
+  < Menu />,
   menuWrapper
   )
 }
 
 const carouselWrapper = document.querySelector('.carousel');
 if (carouselWrapper) {
-  new Carousel(carouselWrapper);
+  ReactDOM.render(
+  < DBProductsContext.Provider value = {arr}>
+      < Carousel slides = {arr} />
+  < /DBProductsContext.Provider>,
+  carouselWrapper
+  )
 }
+
+
 
 loadProduct('/assets/data/products.json').then((productsData) => {
 
