@@ -6,7 +6,7 @@ class Carousel extends React.Component {
     super(props);
 
     this.state = {
-      current: 1
+      current: 0
     }
   }
 
@@ -18,8 +18,8 @@ class Carousel extends React.Component {
         <ol className="carousel-indicators" onClick={this.moveByIndicators}>
           {carousel.map((_, index) => {
             const className = `carousel-indicator ${index === this.state.current && "active"}`;
-
-            return <li data-target="#mainCarousel" data-slide-to="0" className={className} />
+            const slideTo = `${index}`;
+            return <li data-target="#mainCarousel" data-slide-to={slideTo} className={className} />
           })}
         </ol>
         <div className="carousel-inner">
