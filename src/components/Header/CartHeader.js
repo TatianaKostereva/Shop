@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = () => {
+const CartHeader = () => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -12,4 +12,4 @@ const Header = () => {
   )
 };
 
-export default Header;
+export default CartHeader;

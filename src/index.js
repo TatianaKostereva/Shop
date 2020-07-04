@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Carousel from './lib/Carousel';
-import Menu from './lib/Menu';
 import loadProduct from './lib/loadProduct';
-import ProductList from './lib/ProductList';
 import CartPage from '@/page/CartPage';
 import DBProductsContext from '@/db/products';
 import DBCart from '@/db/DBCart';
+import MainPage from "@/page/MainPage";
 
 const arr = [
   {
@@ -27,34 +25,42 @@ const arr = [
   },
 ];
 
-const menuWrapper = document.querySelector('.main-menu');
-if (menuWrapper) {
+// const menuWrapper = document.querySelector('.main-menu');
+// if (menuWrapper) {
+//   ReactDOM.render(
+//     <Menu />,
+//   menuWrapper
+//   )
+// }
+
+// const carouselWrapper = document.querySelector('.carousel');
+// if (carouselWrapper) {
+//   ReactDOM.render(
+//     <Carousel slides={arr} />,
+//   carouselWrapper
+//   )
+// }
+
+const mainPageWrapper = document.querySelector('#mainPage');
+if (mainPageWrapper) {
   ReactDOM.render(
-    <Menu />,
-  menuWrapper
+  <DBProductsContext.Provider value={arr} >
+    <MainPage />
+  </DBProductsContext.Provider>,
+  mainPageWrapper
   )
 }
-
-const carouselWrapper = document.querySelector('.carousel');
-if (carouselWrapper) {
-  ReactDOM.render(
-    <Carousel slides={arr} />,
-  carouselWrapper
-  )
-}
-
-
 
 loadProduct('/assets/data/products.json').then((productsData) => {
-  const productListWrapper = document.querySelector('.product-list');
-  if (productListWrapper) {
-    ReactDOM.render(
-    <DBProductsContext.Provider value={productsData} >
-        <ProductList productsData={productsData} />
-    </DBProductsContext.Provider>,
-    productListWrapper
-    )
-  }
+  // const productListWrapper = document.querySelector('.product-list');
+  // if (productListWrapper) {
+  //   ReactDOM.render(
+  //   <DBProductsContext.Provider value={productsData} >
+  //       <ProductList productsData={productsData} />
+  //   </DBProductsContext.Provider>,
+  //   productListWrapper
+  //   )
+  // }
 
   const checkoutProductListWrapper = document.querySelector('#checkoutPage');
   if (checkoutProductListWrapper) {

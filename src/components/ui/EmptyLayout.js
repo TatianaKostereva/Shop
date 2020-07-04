@@ -1,11 +1,11 @@
 import React from 'react'
-import Header from '@/components/Header/Header';
+import CartHeader from '@/components/Header/CartHeader';
 import Footer from '@/components/Footer/Footer';
 
 const EmptyLayout = ({ children }) => {
   return (
     <>
-      <Header/>
+      <CartHeader/>
       <main role="main">
         <div className="container">
           <div className="row justify-content-center">

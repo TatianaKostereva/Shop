@@ -2,12 +2,10 @@ import React from 'react';
 
 import ProductListView from '@/components/Product/ProductListView';
 
-
 class ProductList extends React.Component {
   constructor(props) {
     super(props);
   }
-
 
   render = () =>  {
     const products = this.props.productsData;
@@ -25,7 +23,6 @@ class ProductList extends React.Component {
       </div>
     )
   }
-
 }
 
 export default ProductList;
