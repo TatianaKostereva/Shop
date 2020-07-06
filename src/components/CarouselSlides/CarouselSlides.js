@@ -3,7 +3,6 @@ import React from 'react';
 const CarouselSlides = ({carouselItem, current}) => {
   const className = `carousel-item ${current && "active"}`;
 
-  console.log(className);
   return (
     <div className={className}>
       <img src={carouselItem.img} alt="ActiveSlide"/>

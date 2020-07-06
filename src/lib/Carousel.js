@@ -19,12 +19,12 @@ class Carousel extends React.Component {
           {carousel.map((_, index) => {
             const className = `carousel-indicator ${index === this.state.current && "active"}`;
             const slideTo = `${index}`;
-            return <li data-target="#mainCarousel" data-slide-to={slideTo} className={className} />
+            return <li data-target="#mainCarousel" key={index} data-slide-to={slideTo} className={className} />
           })}
         </ol>
         <div className="carousel-inner">
           {carousel.map((item, index) => {
-            return <CarouselSlides carouselItem={item} current={index === this.state.current} />
+            return <CarouselSlides carouselItem={item} key={index} current={index === this.state.current} />
           })}
         </div>
         <button className="carousel-control-prev" role="button" data-slide="prev" onClick={this.movePrevSlide}>
@@ -55,11 +55,14 @@ class Carousel extends React.Component {
 
   moveByIndicators = (event) =>  {
     const { target } = event;
+
     const currentSlideIndex = +target.dataset.slideTo;
 
-    this.setState({
-      current: currentSlideIndex
-    });
+    if (currentSlideIndex || currentSlideIndex === 0) {
+      this.setState({
+        current: currentSlideIndex
+      });
+    }
   }
 
 }

@@ -1,37 +1,78 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import MainHeader from '@/components/Header/MainHeader';
 import Footer from '@/components/Footer/Footer';
-import Menu from './lib/Menu';
+import Menu from '@/lib/Menu';
 import Carousel from "@/lib/Carousel";
 import DBProductsContext from "@/db/products";
-import loadProduct from "@/lib/loadProduct";
-import ReactDOM from "react-dom";
 import ProductList from "@/lib/ProductList";
 
-loadProduct('/assets/data/products.json').then((productsData) => {
-<ProductList productsData = {productsData} />
-});
+const slides = [
+    {
+        id: 0,
+        title: 'BEST LAPTOP DEALS',
+        img: './assets/images/default-slide-img.jpg',
+    },
+    {
+        id: 1,
+        title: 'BEST HEADPHONES DEALS',
+        img: './assets/images/default-slide-img.jpg',
+    },
+    {
+        id: 2,
+        title: 'BEST SPEAKERS DEALS',
+        img: './assets/images/default-slide-img.jpg',
+    },
+];
+
+const menu = [
+    {
+        id: 'cameraPhotos',
+        title: 'Camera & Photo',
+        children: [
+            {
+                id: 'Accessories',
+                title: 'Accessories'
+            }
+        ]
+    },
+    {
+        id: 'cinema',
+        title: 'Home Cinema, TV & Video',
+        children: [
+            {
+                id: 'Audio',
+                title: 'Audio'
+            },
+            {
+                id: 'Video',
+                title: 'Video'
+            }
+        ]
+    },
+];
 
 const MainEmptyLayout = () => {
- const arr = useContext(DBProductsContext);
+ const productsData = useContext(DBProductsContext);
+ const [showBackDrop, setShowBackDrop] = useState();
+ const backDropClassName = `backdrop ${showBackDrop && 'show'}`
 
  return (
    <>
    <MainHeader/>
    <main role="main">
-    <div className="backdrop"></div>
+    <div className={backDropClassName} />
      <div className="container">
       <div className="row flex-column-reverse flex-lg-row">
        <div className="col-lg-3 main-menu">
-         <Menu />
+         <Menu menu={menu} setShowBackDrop={setShowBackDrop}/>
        </div>
        <div className="col-lg-9 carousel">
-         <Carousel slides={arr} />,
+         <Carousel slides={slides} />
        </div>
       </div>
      </div>
      <div id="root" className="container product-list">
-       <ProductList productsData = {productsData} />
+       <ProductList productsData={productsData} />
      </div>
     </main>
    <Footer/>

@@ -6,7 +6,7 @@ const Rate = ({rating = {}}) => {
       const modificator = index < rating.stars ? 'checked' : 'active';
       const iconClassName = `icon-star ${modificator}`;
 
-      return <i className={iconClassName} />;
+      return <i className={iconClassName} key={index} />;
     }
     return <i className="icon-star" />;
   });

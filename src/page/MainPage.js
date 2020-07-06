@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 
-import MainEmptyLayout from '@/components/ui/EmptyLayout';
+import MainEmptyLayout from '@/components/ui/MainEmptyLayout';
 
 
 const MainPage = () => {

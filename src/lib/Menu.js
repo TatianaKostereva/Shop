@@ -4,32 +4,32 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      cameraPhotos: false,
-      cinema: false,
-    }
+    this.state = props.menu.reduce((prevValue,item) => {
+      prevValue[item.id] = false;
+      return prevValue;
+    }, {});
   }
 
   render() {
-    const classNameCameraPhotos = `dropdown-menu ${this.state.cameraPhotos && "show"}`;
-    const classNameCinema = `dropdown-menu ${this.state.cinema && "show"}`;
+    const menu = this.props.menu;
 
     return (
       <ul className ="list-group sidebar">
-        <li className="list-group-item dropdown" data-menu-to="cameraPhotos" onPointerEnter = {this.showDropdownMenu} onPointerLeave = {this.hideDropdownMenu}>
-          <a className="nav-link dropdown-toggle" id="cameraPhotos">Camera &amp; Photo</a>
-          <ul className={classNameCameraPhotos}>
-           <li data-id="cameraPhotos_accessories" className="dropdown-item"><a>Accessories</a></li>
-          </ul>
-        </li>
+        {menu.map(item => {
+          const className = `dropdown-menu ${this.state[item.id] && "show"}`;
+          return (
+            <li className="list-group-item dropdown" data-menu-to={item.id} key={item.id} onPointerEnter = {this.showDropdownMenu} onPointerLeave = {this.hideDropdownMenu}>
+              <a className="nav-link dropdown-toggle" id="cameraPhotos">{item.title}</a>
 
-        <li className="list-group-item dropdown"  data-menu-to="cinema" onPointerEnter = {this.showDropdownMenu} onPointerLeave = {this.hideDropdownMenu}>
-          <a className="nav-link dropdown-toggle" id="cinema">Home Cinema, TV &amp; Video</a>
-          <ul className={classNameCinema}>
-           <li data-id="cinema_audio" className="dropdown-item"><a>Audio</a></li>
-           <li data-id="cinema_video" className="dropdown-item"><a>Video</a></li>
-          </ul>
-        </li>
+              <ul className={className}>{item.children.map(child => {
+                return (
+                <li data-id={child.id} key={child.id} className="dropdown-item"><a>{child.title}</a></li>
+                )
+              })}
+              </ul>
+            </li>
+          )
+        })}
       </ul>
     )
   }
@@ -41,8 +41,7 @@ class Menu extends React.Component {
       [currentMenuIndex]: true,
     });
 
-    const backdrop = document.querySelector('.backdrop');
-    backdrop.classList.add('show');
+    this.props.setShowBackDrop(true);
   };
 
   hideDropdownMenu = (event) => {
@@ -52,8 +51,7 @@ class Menu extends React.Component {
       [currentMenuIndex]: false,
     });
 
-    const backdrop = document.querySelector('.backdrop');
-    backdrop.classList.remove('show');
+    this.props.setShowBackDrop(false);
   };
 }
 

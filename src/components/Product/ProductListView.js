@@ -7,7 +7,7 @@ import CartService from '@/services/CartService';
 const ProductListView = ({ product }) => {
 
     return (
-        <div key={product.id} data-product-id={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">
+        <div data-product-id={product.id} key={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">
             <div className="card">
                 <div className="card-img-wrap">
                     <img className="card-img-top" src={product.imageUrl} alt="Card image cap"/>
