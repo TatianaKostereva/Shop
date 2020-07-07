@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Menu extends React.Component {
   constructor(props) {
@@ -54,6 +55,22 @@ class Menu extends React.Component {
     this.props.setShowBackDrop(false);
   };
 }
+
+Menu.propTypes = {
+  setShowBackDrop: PropTypes.func.isRequired,
+  menu: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        children: PropTypes.arrayOf(
+            PropTypes.shape({
+              id: PropTypes.string.isRequired,
+              title: PropTypes.string.isRequired,
+            })
+        ).isRequired
+      })
+  ).isRequired
+};
 
 export default Menu;
 
