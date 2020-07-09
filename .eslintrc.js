@@ -21,7 +21,6 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'comma-dangle': ['error', 'always-multiline'],
 
-    'arrow-body-style': 'always',
     'react/prop-types': 0,
   },
   settings: {
