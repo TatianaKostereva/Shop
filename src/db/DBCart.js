@@ -13,9 +13,16 @@ const DBCart = ({children}) => {
     setProducts(CartService.getProductsId);
   };
 
+  const addToCart = (id) => {
+    CartService.putProducts(id);
+    setProducts(CartService.getProductsId);
+  }
+
   const cart = {
     products: products,
+    pageSize: 3,
     deleteProduct: deleteProduct,
+    addToCart: addToCart,
   };
 
   return (

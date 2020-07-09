@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProductListView from '@/components/Product/ProductListView';
+import ProductListView from '@/components/catalogOfProducts/ProductListView';
 
 class ProductList extends React.Component {
   constructor(props) {

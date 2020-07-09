@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import loadProduct from './services/loadProduct';
+import loadProduct from '@/services/loadProduct';
 import CartPage from '@/page/CartPage';
 import DBProductsContext from '@/db/products';
 import DBCart from '@/db/DBCart';
@@ -14,7 +14,7 @@ loadProduct('/assets/data/products.json').then((productsData) => {
     <DBProductsContext.Provider value={productsData}>
       <DBCart>
         {mainPageWrapper && <MainPage />}
-        {checkoutProductListWrapper && <CartPage pageSize={3} />}
+        {checkoutProductListWrapper && <CartPage />}
       </DBCart>,
     </DBProductsContext.Provider>,
     mainPageWrapper || checkoutProductListWrapper

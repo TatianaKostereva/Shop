@@ -24,6 +24,9 @@ const getProducts = (idProductsInCart, productsData = []) => {
 };
 
 const deleteProduct = (productId) => {
+  if (confirm('Вы уверены, что хотите удалить этот товар из корзины?') !== true) {
+    return false;
+  }
   const productsLocalStorage = localStorage.getItem('cart-products');
   const idProductsInCart = JSON.parse(productsLocalStorage) || [];
   const indexOfProductToDelete = idProductsInCart.findIndex((id) => productId == id);

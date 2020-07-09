@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import Rate from '@/components/Rate/Rate';
-import Price from '@/components/Price/Price';
-import DBProductsContext from '@/db/products';
-import CartService from '@/services/CartService';
+import Rate from '@/components/core/Rate/Rate';
+import Price from '@/components/ui/Price/Price';
+import {DBCartContext} from "@/db/DBCart";
 
 const ProductListView = ({ product }) => {
+    const { addToCart } = useContext(DBCartContext);
 
     return (
         <div data-product-id={product.id} key={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">
@@ -20,7 +20,7 @@ const ProductListView = ({ product }) => {
                         className="product-add-to-cart"
                         data-button-role="add-to-cart"
                         onClick={() => {
-                        CartService.putProducts(product.id);
+                            addToCart(product.id);
                         }}
                     >
                     Add to cart

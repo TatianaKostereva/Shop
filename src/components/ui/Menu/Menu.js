@@ -5,10 +5,9 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = props.menu.reduce((prevValue,item) => {
-      prevValue[item.id] = false;
-      return prevValue;
-    }, {});
+    this.state =  {
+        currentItem: null
+    }
   }
 
   render() {
@@ -17,7 +16,7 @@ class Menu extends React.Component {
     return (
       <ul className ="list-group sidebar">
         {menu.map(item => {
-          const className = `dropdown-menu ${this.state[item.id] && "show"}`;
+          const className = `dropdown-menu ${(item.id === this.state.currentItem) && "show"}`;
           return (
             <li className="list-group-item dropdown" data-menu-to={item.id} key={item.id} onPointerEnter = {this.showDropdownMenu} onPointerLeave = {this.hideDropdownMenu}>
               <a className="nav-link dropdown-toggle" id="cameraPhotos">{item.title}</a>
@@ -39,7 +38,7 @@ class Menu extends React.Component {
     const currentMenuIndex = event.currentTarget.dataset.menuTo;
 
     this.setState({
-      [currentMenuIndex]: true,
+        currentItem: currentMenuIndex,
     });
 
     this.props.setShowBackDrop(true);
@@ -49,7 +48,7 @@ class Menu extends React.Component {
     const currentMenuIndex = event.currentTarget.dataset.menuTo;
 
     this.setState({
-      [currentMenuIndex]: false,
+        currentItem: null,
     });
 
     this.props.setShowBackDrop(false);

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import Rate from '@/components/Rate/Rate';
+import Rate from '@/components/core/Rate/Rate';
 import DBProductsContext from '@/db/products';
 import { DBCartContext } from '@/db/DBCart';
 
-const Product = ({ id }) => {
+const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
   const product = useContext(DBProductsContext).find(product => {
     return product.id === id;
@@ -47,4 +47,4 @@ const Product = ({ id }) => {
   );
 };
 
-export default Product;
+export default ProductListViewInCart;

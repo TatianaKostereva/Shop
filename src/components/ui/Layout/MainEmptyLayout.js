@@ -1,10 +1,8 @@
 import React, {useContext, useState} from 'react'
-import MainHeader from '@/components/Header/MainHeader';
-import Footer from '@/components/Footer/Footer';
-import Menu from '@/lib/Menu';
-import Carousel from "@/lib/Carousel";
-import DBProductsContext from "@/db/products";
-import ProductList from "@/lib/ProductList";
+import MainHeader from '@/components/ui/Header/MainHeader';
+import Footer from '@/components/ui/Footer/Footer';
+import Menu from '@/components/ui/Menu/Menu';
+import Carousel from "@/components/ui/Carousel/Carousel";
 
 const slides = [
     {
@@ -51,8 +49,7 @@ const menu = [
     },
 ];
 
-const MainEmptyLayout = () => {
- const productsData = useContext(DBProductsContext);
+const MainEmptyLayout = ({children}) => {
  const [showBackDrop, setShowBackDrop] = useState();
  const backDropClassName = `backdrop ${showBackDrop && 'show'}`
 
@@ -72,7 +69,7 @@ const MainEmptyLayout = () => {
       </div>
      </div>
      <div id="root" className="container product-list">
-       <ProductList productsData={productsData} />
+        {children}
      </div>
     </main>
    <Footer/>

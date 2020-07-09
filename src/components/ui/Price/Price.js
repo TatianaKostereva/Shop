@@ -8,6 +8,6 @@ const Price = ({product = {product}}) => {
         {oldPriceLabel}
      </p>
     )
-}
+};
 
 export default Price;

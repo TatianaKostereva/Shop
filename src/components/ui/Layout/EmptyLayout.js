@@ -1,6 +1,6 @@
 import React from 'react'
-import CartHeader from '@/components/Header/CartHeader';
-import Footer from '@/components/Footer/Footer';
+import CartHeader from '@/components/ui/Header/CartHeader';
+import Footer from '@/components/ui/Footer/Footer';
 
 const EmptyLayout = ({ children }) => {
   return (

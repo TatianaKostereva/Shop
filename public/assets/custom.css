@@ -848,11 +848,11 @@ form button[type="submit"]:not(.btn-send) {
 /* Styles for base page END */
 
 
-/* Styles for product in Product List BEGIN*/
+/* Styles for product in ProductListViewInCart List BEGIN*/
 .product-add-to-cart {
   margin-top: auto;
 }
-/* Styles for product in Product List END*/
+/* Styles for product in ProductListViewInCart List END*/
 
 
 /* Styles for product on checkout page BEGIN*/
