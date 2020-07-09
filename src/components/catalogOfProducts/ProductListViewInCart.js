@@ -5,9 +5,7 @@ import { DBCartContext } from '@/db/DBCart';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
-  const product = useContext(DBProductsContext).find(product => {
-    return product.id === id;
-  });
+  const product = useContext(DBProductsContext).find((product) => product.id === id);
 
   return (
     <div key={product.id} data-product-id={product.id} className="product-wrapper box-inner-col description-col">
@@ -23,7 +21,11 @@ const ProductListViewInCart = ({ id }) => {
       </div>
       <div className="product-price">
         <p className="mb-0 font-weight-light">Price:</p>
-        <h4 className="col-title price-text mb-2">{product.currency} {product.price}</h4>
+        <h4 className="col-title price-text mb-2">
+          {product.currency}
+          {' '}
+          {product.price}
+        </h4>
       </div>
       <div className="quantity">
         <p>Quantity:</p>

@@ -1,8 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const Footer = () => {
-  return (
-    <footer className="footer">
+const Footer = () => (
+  <footer className="footer">
     <div className="container">
       <div className="footer-inner">
         <div className="footer-menu">
@@ -20,7 +19,6 @@ const Footer = () => {
       </div>
     </div>
   </footer>
-  )
-};
+);
 
 export default Footer;

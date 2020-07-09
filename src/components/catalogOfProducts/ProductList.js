@@ -7,21 +7,19 @@ class ProductList extends React.Component {
     super(props);
   }
 
-  render = () =>  {
+  render = () => {
     const products = this.props.productsData;
 
     return (
       <div className="row justify-content-end">
         <div className="col-lg-9">
-           <h3 className="section-title">Top Recommendations for You</h3>
-           <div className="row homepage-cards">
-              {products.map((item) => {
-                return <ProductListView product={item} />
-              })}
-           </div>
+          <h3 className="section-title">Top Recommendations for You</h3>
+          <div className="row homepage-cards">
+            {products.map((item) => <ProductListView product={item} />)}
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

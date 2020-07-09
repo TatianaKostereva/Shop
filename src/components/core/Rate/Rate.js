@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Rate = ({rating = {}}) => {
+const Rate = ({ rating = {} }) => {
   const stars = new Array(5).fill('').map((value, index) => {
     if (rating != null) {
       const modificator = index < rating.stars ? 'checked' : 'active';

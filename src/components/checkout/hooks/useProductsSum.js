@@ -1,12 +1,10 @@
-import React, {useMemo} from 'react';
-import {getProductsSum} from "@/utils/productUtils";
+import React, { useMemo } from 'react';
+import { getProductsSum } from '@/utils/productUtils';
 
-const useProductsSum =  (products) => {
-    const sumPrice = useMemo(() => {
-        return getProductsSum(products)
-    }, [products]);
+const useProductsSum = (products) => {
+  const sumPrice = useMemo(() => getProductsSum(products), [products]);
 
-    return sumPrice;
+  return sumPrice;
 };
 
 export default useProductsSum;

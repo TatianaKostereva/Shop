@@ -5,8 +5,8 @@ export const DBCartContext = React.createContext(
   [],
 );
 
-const DBCart = ({children}) => {
-  const [ products, setProducts ] = useState(CartService.getProductsId());
+const DBCart = ({ children }) => {
+  const [products, setProducts] = useState(CartService.getProductsId());
 
   const deleteProduct = (id) => {
     CartService.deleteProduct(id);
@@ -16,20 +16,20 @@ const DBCart = ({children}) => {
   const addToCart = (id) => {
     CartService.putProducts(id);
     setProducts(CartService.getProductsId);
-  }
+  };
 
   const cart = {
-    products: products,
+    products,
     pageSize: 3,
-    deleteProduct: deleteProduct,
-    addToCart: addToCart,
+    deleteProduct,
+    addToCart,
   };
 
   return (
     <DBCartContext.Provider value={cart}>
       {children}
     </DBCartContext.Provider>
-  )
+  );
 };
 
 export default DBCart;

@@ -7,9 +7,7 @@ const getProductsId = () => {
 };
 
 const getProducts = (idProductsInCart, productsData = []) => {
-  const listOfProducts = idProductsInCart.map((id) => {
-    return productsData.find((product) => product.id == id);
-  });
+  const listOfProducts = idProductsInCart.map((id) => productsData.find((product) => product.id == id));
 
   const productsInCart = listOfProducts.reduce((obj, item) => {
     if (!obj.hasOwnProperty(item.id)) {
@@ -35,7 +33,7 @@ const deleteProduct = (productId) => {
 
   localStorage.setItem('cart-products', JSON.stringify(idProductsInCart));
 
-  observers.forEach((observer) => observer())
+  observers.forEach((observer) => observer());
 };
 
 const putProducts = (id) => {
@@ -46,20 +44,19 @@ const putProducts = (id) => {
   const productsInCart = JSON.parse(productsLocalStorage) || [];
   productsInCart.push(+id);
   localStorage.setItem('cart-products', JSON.stringify(productsInCart));
-}
+};
 
 const setObserver = (observer) => {
-  observers.push(observer)
+  observers.push(observer);
 };
 
 const CartService = {
-  getProducts: getProducts,
-  deleteProduct: deleteProduct,
-  getProductsId: getProductsId,
-  putProducts: putProducts,
+  getProducts,
+  deleteProduct,
+  getProductsId,
+  putProducts,
 
-  setObserver: setObserver
+  setObserver,
 };
 
 export default CartService;
-

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import CartService from '@/services/CartService';
 import CheckoutProductList from '@/components/checkout/CheckoutProductList';
 import EmptyLayout from '@/components/ui/Layout/EmptyLayout';
@@ -22,7 +22,7 @@ const CartPage = () => {
         />
       </div>
     </EmptyLayout>
-  )
+  );
 };
 
 export default CartPage;
