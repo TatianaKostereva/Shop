@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MainHeader = () => (
   <header>
@@ -24,7 +25,7 @@ const MainHeader = () => (
           >
             <img src="./assets/icons/icon-menu.svg" alt="menu icon" />
           </button>
-          <a className="navbar-brand" href="/"><strong>AnyShop</strong></a>
+          <Link className="navbar-brand" to="/"><strong>AnyShop</strong></Link>
         </div>
         <a
           href="#"
@@ -39,18 +40,16 @@ const MainHeader = () => (
         <div className="collapse navbar-collapse" id="navbarsExample07">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <a
+              <Link
                 className="nav-link"
-                href="#"
+                to="/"
               >
                 Sales
-                {' '}
                 <span className="sr-only">(current)</span>
-              </a
-                         >
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/checkout.html">Cart</a>
+              <Link className="nav-link" to="cart">Cart</Link>
             </li>
             <li className="nav-item">
               <form className="form-inline my-2 my-md-0 ml-lg-5">
@@ -62,7 +61,7 @@ const MainHeader = () => (
                 />
                 <button type="submit" className="btn btn-outline-primary">
                   Search
-                    </button>
+                </button>
               </form>
             </li>
           </ul>

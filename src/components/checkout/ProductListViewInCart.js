@@ -23,7 +23,6 @@ const ProductListViewInCart = ({ id }) => {
         <p className="mb-0 font-weight-light">Price:</p>
         <h4 className="col-title price-text mb-2">
           {product.currency}
-          {' '}
           {product.price}
         </h4>
       </div>

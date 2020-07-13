@@ -5,19 +5,26 @@ import CartPage from '@/page/CartPage';
 import DBProductsContext from '@/db/products';
 import DBCart from '@/db/DBCart';
 import MainPage from '@/page/MainPage';
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 
 loadProduct('/assets/data/products.json').then((productsData) => {
-  const mainPageWrapper = document.querySelector('#mainPage');
-  const checkoutProductListWrapper = document.querySelector('#checkoutPage');
-
   ReactDOM.render(
-    <DBProductsContext.Provider value={productsData}>
-      <DBCart>
-        {mainPageWrapper && <MainPage />}
-        {checkoutProductListWrapper && <CartPage />}
-      </DBCart>
-      ,
-    </DBProductsContext.Provider>,
-    mainPageWrapper || checkoutProductListWrapper,
+    (
+      <Router>
+        <DBProductsContext.Provider value={productsData}>
+          <DBCart>
+            <Switch>
+              <Route exact path="/" component={MainPage} />
+              <Route exact path="/cart" component={CartPage} />
+            </Switch>
+          </DBCart>
+        </DBProductsContext.Provider>
+      </Router>
+    ),
+    document.querySelector('#root'),
   );
 });
