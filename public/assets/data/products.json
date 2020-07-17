@@ -5,9 +5,9 @@
     "imageUrl": "/assets/images/headphones.png",
     "rating": {
       "stars": 4,
-      "reviewsAmount": 24
+      "reviewsAmount": 14
     },
-    "price": "€ 1000",
+    "price": "€ 399",
     "oldPrice": null
   },
   {
@@ -16,7 +16,7 @@
     "imageUrl": "/assets/images/headset.png",
     "rating": {
       "stars": 5,
-      "reviewsAmount": 121
+      "reviewsAmount": 12
     },
     "price": "€ 47.31",
     "oldPrice": null
@@ -27,7 +27,7 @@
     "imageUrl": "/assets/images/turntable.png",
     "rating": {
       "stars": 5,
-      "reviewsAmount": 24
+      "reviewsAmount": 10
     },
     "price": "€ 129.92",
     "oldPrice": "€ 250"
@@ -57,7 +57,7 @@
     "imageUrl": "/assets/images/microphone.png",
     "rating": {
       "stars": 4,
-      "reviewsAmount": 14
+      "reviewsAmount": 16
     },
     "price": "€ 299.00",
     "oldPrice": null
