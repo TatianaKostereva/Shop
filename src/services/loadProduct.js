@@ -1,5 +1,9 @@
-const loadProduct = (productsUrl) => fetch(productsUrl)
-  .then((res) => res.json())
+const loadProduct = (productsUrl) => fetch(productsUrl, {
+  method: 'OPTIONS',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.json())
   .then((data) => data.map((product) => {
     const temp = product.price.split(' ');
 
