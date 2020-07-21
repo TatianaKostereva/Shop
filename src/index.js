@@ -11,7 +11,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-loadProduct('http://localhost:3000/products').then((productsData) => {
+loadProduct().then((productsData) => {
   ReactDOM.render(
     (
       <Router>

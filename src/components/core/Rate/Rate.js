@@ -1,21 +1,23 @@
 import React from 'react';
 
-const Rate = ({ rating = {} }) => {
-  const stars = new Array(5).fill('').map((value, index) => {
-    if (rating != null) {
-      const modificator = index < rating.stars ? 'checked' : 'active';
+const Rate = ({ reviews = [] }) => {
+  const stars = reviews.reduce((a, b) => a + b.stars, 0) / reviews.length;
+
+  let starsRender;
+  if (reviews.length > 0) {
+    starsRender = new Array(5).fill('').map((value, index) => {
+      const modificator = index < stars ? 'checked' : 'active';
       const iconClassName = `icon-star ${modificator}`;
 
       return <i className={iconClassName} key={index} />;
-    }
-    return <i className="icon-star" />;
-  });
-
-  const reviews = rating === null ? 0 : rating.reviewsAmount;
+    });
+  } else {
+    starsRender = <i className="icon-star" />
+  }
 
   return (
     <div className="rate">
-      {stars}
+      {starsRender}
       <span className="rate-amount ml-2">{reviews}</span>
     </div>
   );
