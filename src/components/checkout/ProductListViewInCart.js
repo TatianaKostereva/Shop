@@ -5,7 +5,7 @@ import { DBCartContext } from '@/db/DBCart';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
-  const product = useContext(DBProductsContext).find((product) => product.id === id);
+  const product = useContext(DBProductsContext).loadProduct.find((product) => product.id === id);
 
   return (
     <div key={product.id} data-product-id={product.id} className="product-wrapper box-inner-col description-col">

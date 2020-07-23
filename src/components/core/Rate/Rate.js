@@ -1,7 +1,10 @@
 import React from 'react';
+import loadReviews from '@/services/loadReviews';
 
-const Rate = ({ reviews = [] }) => {
-  const stars = reviews.reduce((a, b) => a + b.stars, 0) / reviews.length;
+ const Rate = ({ reviews = [] }) => {
+   console.log(reviews)
+  const stars = +reviews.reduce((prevValue, item) => prevValue + +item.stars, 0) / reviews.length;
+  console.log(stars)
 
   let starsRender;
   if (reviews.length > 0) {
@@ -18,7 +21,7 @@ const Rate = ({ reviews = [] }) => {
   return (
     <div className="rate">
       {starsRender}
-      <span className="rate-amount ml-2">{reviews}</span>
+      <span className="rate-amount ml-2">{reviews.length}</span>
     </div>
   );
 };
