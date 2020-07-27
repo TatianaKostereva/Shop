@@ -1,8 +1,6 @@
-// import Rate from '@/components/core/Rate/Rate';
-// import React from 'react';
-// import DBProductsContext from "@/db/products";
-//
-// const LoadReviews = () => {
-//   const loadReviews = async () => await fetch('http://localhost:3000/reviews').then((res) => res.json());
+import { getServer, URL } from '@/services/constants';
 
+const url = getServer(URL, 'reviews', 'get_by_product');
+const loadReviews = (productId) => fetch(`${url}/${productId}`).then((res) => res.json());
 
+export default loadReviews;

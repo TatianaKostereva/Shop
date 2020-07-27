@@ -1,22 +1,18 @@
 import React from 'react';
-import loadReviews from '@/services/loadReviews';
+import getStars from '@/components/core/Rate/utils/getStars';
 
- const Rate = ({ reviews = [] }) => {
-   console.log(reviews)
-  const stars = +reviews.reduce((prevValue, item) => prevValue + +item.stars, 0) / reviews.length;
-  console.log(stars)
+const Rate = ({ reviews = [] }) => {
+  const stars = getStars(reviews);
 
-  let starsRender;
-  if (reviews.length > 0) {
-    starsRender = new Array(5).fill('').map((value, index) => {
-      const modificator = index < stars ? 'checked' : 'active';
-      const iconClassName = `icon-star ${modificator}`;
+  const starsRender = new Array(5).fill('').map((value, index) => {
+    let modificator;
+    if (reviews.length !== 0) {
+      modificator = index < stars ? 'checked' : 'active';
+    }
+    const iconClassName = `icon-star ${modificator}`;
 
-      return <i className={iconClassName} key={index} />;
-    });
-  } else {
-    starsRender = <i className="icon-star" />
-  }
+    return <i className={iconClassName} key={index} />;
+  });
 
   return (
     <div className="rate">

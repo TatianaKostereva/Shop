@@ -1,3 +1,6 @@
-const loadProduct = () => fetch('http://localhost:3000/products').then((res) => res.json());
+import { getServer, URL } from '@/services/constants';
+
+const url = getServer(URL, 'products');
+const loadProduct = () => fetch(url).then((res) => res.json());
 
 export default loadProduct;

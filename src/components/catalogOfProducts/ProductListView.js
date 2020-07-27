@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Rate from '@/components/core/Rate/Rate';
 import Price from '@/components/ui/Price/Price';
 import { DBCartContext } from '@/db/DBCart';
+import loadReviews from '@/services/loadReviews';
 
 const ProductListView = ({ product }) => {
   const { addToCart } = useContext(DBCartContext);
-
   const [reviews, setReviews] = useState(null);
 
-  fetch(`http://localhost:3000/reviews/get_by_product/${product.id}`)
-    .then((res) => res.json())
-    .then((reviews) => setReviews(reviews));
+  useEffect(() => {
+    loadReviews(product.id).then((reviews) => setReviews(reviews));
+  }, []);
 
   return (
     <div data-product-id={product.id} key={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">

@@ -6,9 +6,9 @@ import DBProductsContext from '@/db/products';
 import { DBCartContext } from '@/db/DBCart';
 
 const CartPage = () => {
-  const { loadProduct } = useContext(DBProductsContext);
+  const productsData = useContext(DBProductsContext);
   const cart = useContext(DBCartContext);
-  const products = CartService.getProducts(cart.products, loadProduct);
+  const products = CartService.getProducts(cart.products, productsData);
 
   return (
     <EmptyLayout>
