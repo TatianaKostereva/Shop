@@ -3,6 +3,7 @@ import Rate from '@/components/core/Rate/Rate';
 import DBProductsContext from '@/db/products';
 import { DBCartContext } from '@/db/DBCart';
 import loadReviews from '@/services/loadReviews';
+import loadCurrency from "@/services/loadCurrency";
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
@@ -11,6 +12,12 @@ const ProductListViewInCart = ({ id }) => {
 
   useEffect(() => {
     loadReviews(product.id).then((reviews) => setReviews(reviews));
+  }, []);
+
+  const [currency, setCurrency] = useState(null);
+
+  useEffect(() => {
+    loadCurrency().then((currency) => setCurrency(currency));
   }, []);
 
   return (
@@ -27,7 +34,7 @@ const ProductListViewInCart = ({ id }) => {
       <div className="product-price">
         <p className="mb-0 font-weight-light">Price:</p>
         <h4 className="col-title price-text mb-2">
-          €
+          {currency}
           {' '}
           {product.price}
         </h4>
