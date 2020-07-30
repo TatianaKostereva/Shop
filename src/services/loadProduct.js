@@ -1,6 +1,6 @@
-import { getServer, URL } from '@/services/constants';
+import { getUrl } from '@/services/constants';
 
-const url = getServer(URL, 'products');
+const url = getUrl('products');
 const loadProduct = () => fetch(url).then((res) => res.json());
 
 export default loadProduct;

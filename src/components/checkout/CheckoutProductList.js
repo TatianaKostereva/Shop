@@ -47,7 +47,12 @@ const CheckoutProductList = ({ products }) => {
   return (
     <div>
       <div className="product-list-box">
-        {productsByPage.map((item) => <ProductListViewInCart id={item.id} />)}
+        {productsByPage.map((item) =>
+          <ProductListViewInCart
+            key={item.id}
+            id={item.id}
+          />
+        )}
       </div>
       <CheckoutSumPrice products={products} />
       {buttons}

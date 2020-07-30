@@ -1,27 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Rate from '@/components/core/Rate/Rate';
+import React, { useContext } from 'react';
 import DBProductsContext from '@/db/products';
 import { DBCartContext } from '@/db/DBCart';
-import loadReviews from '@/services/loadReviews';
-import loadCurrency from "@/services/loadCurrency";
+import ProductRate from '@/components/products/rate/ProductRate';
+import Price from '@/components/ui/Price/Price';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
   const product = useContext(DBProductsContext).find((product) => product.id === id);
-  const [reviews, setReviews] = useState(null);
-
-  useEffect(() => {
-    loadReviews(product.id).then((reviews) => setReviews(reviews));
-  }, []);
-
-  const [currency, setCurrency] = useState(null);
-
-  useEffect(() => {
-    loadCurrency().then((currency) => setCurrency(currency));
-  }, []);
 
   return (
-    <div key={product.id} data-product-id={product.id} className="product-wrapper box-inner-col description-col">
+    <div data-product-id={product.id} className="product-wrapper box-inner-col description-col">
       <div className="product-image-container">
         <img className="product-image" src={product.imageUrl} alt="img" />
       </div>
@@ -29,14 +17,12 @@ const ProductListViewInCart = ({ id }) => {
         <h4 className="col-title mb-2">
           {product.title}
         </h4>
-        {reviews && <Rate reviews={reviews} />}
+        <ProductRate id={product.id} />
       </div>
       <div className="product-price">
         <p className="mb-0 font-weight-light">Price:</p>
         <h4 className="col-title price-text mb-2">
-          {currency}
-          {' '}
-          {product.price}
+          <Price product={product} />
         </h4>
       </div>
       <div className="quantity">

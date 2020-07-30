@@ -10,18 +10,21 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import DBCurrency from '@/db/DBCurrency';
 
 loadProduct().then((productsData) => {
   ReactDOM.render(
     (
       <Router>
         <DBProductsContext.Provider value={productsData}>
-          <DBCart>
-            <Switch>
-              <Route exact path="/" component={MainPage} />
-              <Route exact path="/cart" component={CartPage} />
-            </Switch>
-          </DBCart>
+          <DBCurrency>
+            <DBCart>
+              <Switch>
+                <Route exact path="/" component={MainPage} />
+                <Route exact path="/cart" component={CartPage} />
+              </Switch>
+            </DBCart>
+          </DBCurrency>
         </DBProductsContext.Provider>
       </Router>
     ),

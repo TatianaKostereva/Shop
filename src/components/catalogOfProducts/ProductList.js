@@ -6,7 +6,7 @@ const ProductList = ({ productsData }) => (
     <div className="col-lg-9">
       <h3 className="section-title">Top Recommendations for You</h3>
       <div className="row homepage-cards">
-        {productsData.map((item) => <ProductListView product={item} />)}
+        {productsData.map((item) => <ProductListView key={item.id} product={item} />)}
       </div>
     </div>
   </div>

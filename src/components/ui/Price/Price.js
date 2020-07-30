@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import loadCurrency from '@/services/loadCurrency';
+import React from 'react';
+import { useCurrency } from '@/db/DBCurrency';
 
-const Price = ({ product = { product } }) => {
-  const [currency, setCurrency] = useState(null);
+const Price = ({ product }) => {
+  const currency = useCurrency() || {};
 
-  useEffect(() => {
-    loadCurrency().then((currency) => setCurrency(currency));
-  }, []);
+  console.log(currency.currencyIcon)
 
   const oldPriceLabel = product.oldPrice ? (
     <small className="ml-2">
@@ -17,7 +15,7 @@ const Price = ({ product = { product } }) => {
   return (
     <p className="card-text price-text discount">
       <strong>
-        {currency}
+        {currency.currencyIcon}
         {' '}
         {product.price}
       </strong>
