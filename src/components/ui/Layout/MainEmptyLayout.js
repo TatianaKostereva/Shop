@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import MainHeader from '@/components/ui/Header/MainHeader';
+import MainHeader from '@/components/ui/Header/MainHeader/MainHeader';
 import Footer from '@/components/ui/Footer/Footer';
 import Menu from '@/components/ui/Menu/Menu';
 import Carousel from '@/components/ui/Carousel/Carousel';

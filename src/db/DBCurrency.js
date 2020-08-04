@@ -7,42 +7,37 @@ export const DBCurrencyContext = React.createContext(
   [],
 );
 
-const currency = 0;
-
-export const useCurrency = () => {
+export const useCurrency = (currentCurrency) => {
   const currencies = useContext(DBCurrencyContext).list;
 
   if (!currencies) {
     return null;
   }
-  return currencies[currency];
+
+  const receivedCurrency = currencies[currentCurrency];
+  return receivedCurrency;
 };
 
 const DBCurrency = ({ children }) => {
   const [list, setList] = useState([]);
-  const [current, setCurrent] = useState(currency + 1);
+  const [current, setCurrent] = useState(5);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    loadCurrencies()
+    loadCurrencies(1, 4)
       .then((currencies) => {
-        setList(currencies);
+        setList([...list, ...currencies]);
         setLoaded(true);
       });
   }, []);
 
   useEffect(() => {
-    if (setLoaded(false)) {
-      loadCurrentCurrency(current)
-        .then((currencies) => {
-          setList(...list, currencies);
-          setLoaded(true);
-          setCurrent(current);
-        });
-    }
-  }, [current]);
-
-  console.log(list)
+    loadCurrentCurrency(current)
+      .then((currencies) => {
+        setList([...list, ...currencies]);
+        setCurrent(current);
+      });
+  }, [current, loaded]);
 
   const currencyStore = useMemo(() => ({
     list,

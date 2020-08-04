@@ -1,5 +1,5 @@
 import React from 'react';
-import CartHeader from '@/components/ui/Header/CartHeader';
+import CartHeader from '@/components/ui/Header/CartHeader/CartHeader';
 import Footer from '@/components/ui/Footer/Footer';
 
 const EmptyLayout = ({ children }) => (
