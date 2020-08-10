@@ -2,14 +2,14 @@ import React from 'react';
 import ProductListView from '@/components/catalogOfProducts/ProductListView';
 import getPages from '@/services/getPages';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ productsData }) => {
   const pageSize = 9;
   const {
-    getProductsByPage,
+    getItemsByPage,
     getButton,
-  } = getPages({ products }, { pageSize });
+  } = getPages({ items: productsData }, { pageSize });
 
-  const productsByPage = getProductsByPage();
+  const productsByPage = getItemsByPage();
   const buttons = getButton();
 
   return (
@@ -26,3 +26,5 @@ const ProductList = ({ products }) => {
 };
 
 export default ProductList;
+
+//<a>Show more</a>

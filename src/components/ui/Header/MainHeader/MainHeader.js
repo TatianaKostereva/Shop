@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import useMainHeader from '@/components/ui/Header/MainHeader/hooks/useMainHeader';
+import { DBCurrencyContext } from '@/db/DBCurrency';
 
 const MainHeader = () => {
-  const { choiceCurrency } = useMainHeader();
+  const { list, setCurrent, currency, loaded } = useContext(DBCurrencyContext);
+
+  const choiceCurrency = useCallback((event) => {
+    const { target } = event;
+    const currentCurrency = +target.dataset.currencyTo;
+
+    setCurrent(currentCurrency);
+  }, [setCurrent]);
 
   return (
     <header>
@@ -70,16 +77,22 @@ const MainHeader = () => {
               </li>
             </ul>
           </div>
-          <div className="currency">
-            <button className="dropbtn">Choice your currency</button>
-            <div className="dropdown-content">
-              <a data-currency-to="0" onClick={choiceCurrency}>EUR</a>
-              <a data-currency-to="1" onClick={choiceCurrency}>USD</a>
-              <a data-currency-to="2" onClick={choiceCurrency}>RUB</a>
-              <a data-currency-to="3" onClick={choiceCurrency}>GBR</a>
-              <a data-currency-to="4" onClick={choiceCurrency}>INR</a>
+          {loaded && (
+            <div className="currency">
+              <button className="dropbtn">{currency.title}</button>
+              <div className="dropdown-content">
+                {list.map((item) => (
+                  <a
+                    key={item.number}
+                    data-currency-to={item.number}
+                    onClick={choiceCurrency}
+                  >
+                    {item.title}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </nav>
     </header>

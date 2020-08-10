@@ -882,7 +882,7 @@ form button[type="submit"]:not(.btn-send) {
 .product-price {
   display: flex;
   flex-direction: column;
-    width: 150px;
+    width: 350px;
   padding: 1rem;
 }
 
@@ -1318,7 +1318,7 @@ form button[type="submit"]:not(.btn-send) {
 }
 
 .quantity h1 {
-    margin-top: 0 0;
+    margin: 0.8rem 0 0 0;
     padding: 0.1rem 1rem 0 1rem;
     width: 200px;
     font-weight: 400;
@@ -1353,8 +1353,8 @@ form button[type="submit"]:not(.btn-send) {
     display: inline-block;
     font-size: 1rem;
     line-height:  1.5;
-    width: 160px;
-    height: 60px;
+    width: 60px;
+    height: 38px;
     border: 1px solid #ced4da;
     border-radius: .25rem;
     background-color: #fff;
@@ -1368,7 +1368,7 @@ form button[type="submit"]:not(.btn-send) {
     position: absolute;
     background-color: #fff;
     font-size: .875rem;
-    min-width: 160px;
+    min-width: 50px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     font-family: inherit;
@@ -1392,7 +1392,7 @@ form button[type="submit"]:not(.btn-send) {
 
 /* Показать выпадающее меню при наведении */
 .currency:hover .dropdown-content {
-    display: block;
+    display: inline-block;
 }
 
 .currency:hover .dropbtn {

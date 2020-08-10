@@ -5,11 +5,11 @@ import DBProductsContext from '@/db/products';
 import ProductList from '@/components/catalogOfProducts/ProductList';
 
 const MainPage = () => {
-  const products = useContext(DBProductsContext);
+  const productsData = useContext(DBProductsContext);
 
   return (
     <MainEmptyLayout>
-      <ProductList products={products} />
+      <ProductList productsData={productsData} />
     </MainEmptyLayout>
   );
 };

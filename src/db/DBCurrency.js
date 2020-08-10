@@ -1,52 +1,37 @@
 import React, {
-  useContext, useEffect, useMemo, useState,
+  useEffect, useMemo, useState,
 } from 'react';
-import loadCurrencies, { loadCurrentCurrency } from '@/services/loadCurrencies';
+import loadCurrencies from '@/services/loadCurrencies';
 
 export const DBCurrencyContext = React.createContext(
   [],
 );
 
-export const useCurrency = (currentCurrency) => {
-  const currencies = useContext(DBCurrencyContext).list;
-
-  if (!currencies) {
-    return null;
-  }
-
-  const receivedCurrency = currencies[currentCurrency];
-  return receivedCurrency;
-};
-
 const DBCurrency = ({ children }) => {
   const [list, setList] = useState([]);
-  const [current, setCurrent] = useState(5);
+  const [current, setCurrent] = useState(978);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    loadCurrencies(1, 4)
+    loadCurrencies(0, 10)
       .then((currencies) => {
         setList([...list, ...currencies]);
         setLoaded(true);
       });
   }, []);
 
-  useEffect(() => {
-    loadCurrentCurrency(current)
-      .then((currencies) => {
-        setList([...list, ...currencies]);
-        setCurrent(current);
-      });
-  }, [current, loaded]);
+  const currency = useMemo(() => list.find((item) => item.number === current), [current, list]);
 
   const currencyStore = useMemo(() => ({
     list,
     loaded,
-    current,
+    currency,
+    setCurrent,
   }), [
     list,
     loaded,
-    current,
+    currency,
+    setCurrent,
   ]);
 
   return (

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-const getPages = ({ products }, { pageSize }) => {
+const getPages = ({ items }, { pageSize }) => {
   const [page, setPage] = useState(0);
 
-  const getProductsByPage = () => {
+  const getItemsByPage = () => {
     const from = page * pageSize;
     const to = (page + 1) * pageSize;
-    return products.slice(from, to);
+    return items.slice(from, to);
   };
 
   const goToPage = (event) => {
@@ -17,7 +17,7 @@ const getPages = ({ products }, { pageSize }) => {
 
   const getButton = () => {
     const buttons = [];
-    for (let i = 0; i < Math.ceil(products.length / pageSize); i++) {
+    for (let i = 0; i < Math.ceil(items.length / pageSize); i++) {
       let className = 'btn-pag ';
 
       if (+page === i) {
@@ -44,7 +44,7 @@ const getPages = ({ products }, { pageSize }) => {
   };
 
   return {
-    getProductsByPage,
+    getItemsByPage,
     getButton,
   };
 };

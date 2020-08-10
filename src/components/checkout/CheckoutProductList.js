@@ -8,11 +8,11 @@ const CheckoutProductList = ({ products }) => {
   const { pageSize } = useContext(DBCartContext);
 
   const {
-    getProductsByPage,
+    getItemsByPage,
     getButton,
-  } = getPages({ products }, { pageSize });
+  } = getPages({ items: products }, { pageSize });
 
-  const productsByPage = getProductsByPage();
+  const productsByPage = getItemsByPage();
   const buttons = getButton();
 
   return (
