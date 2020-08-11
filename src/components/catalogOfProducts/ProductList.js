@@ -1,30 +1,38 @@
-import React from 'react';
+import React, {
+  useCallback, useContext, useEffect, useState,
+} from 'react';
 import ProductListView from '@/components/catalogOfProducts/ProductListView';
-import getPages from '@/services/getPages';
+import { DBProductsContext } from '@/db/DBProducts';
 
-const ProductList = ({ productsData }) => {
-  const pageSize = 9;
-  const {
-    getItemsByPage,
-    getButton,
-  } = getPages({ items: productsData }, { pageSize });
+const ProductList = () => {
+  const { productsList, loaded, loadData } = useContext(DBProductsContext);
+  const [range, setRange] = useState([1, 6]);
 
-  const productsByPage = getItemsByPage();
-  const buttons = getButton();
+  useEffect(() => {
+    loadData(range[0], range[1]);
+  }, [range]);
+
+  const loadMore = useCallback(() => {
+    setRange([range[1] + 1, range[1] + 3]);
+  }, [setRange, range]);
+
+  if (!loaded) {
+    return false;
+  }
 
   return (
     <div className="row justify-content-end">
       <div className="col-lg-9">
         <h3 className="section-title">Top Recommendations for You</h3>
         <div className="row homepage-cards">
-          {productsByPage.map((item) => <ProductListView key={item.id} product={item} />)}
+          {productsList.map((item) => <ProductListView key={item.id} product={item} />)}
         </div>
-        {buttons}
+        <div>
+          <button className="showMore" onClick={loadMore}>Show more</button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ProductList;
-
-//<a>Show more</a>

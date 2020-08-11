@@ -1,17 +1,12 @@
-import React, { useContext } from 'react';
-
+import React from 'react';
 import MainEmptyLayout from '@/components/ui/Layout/MainEmptyLayout';
-import DBProductsContext from '@/db/products';
 import ProductList from '@/components/catalogOfProducts/ProductList';
 
-const MainPage = () => {
-  const productsData = useContext(DBProductsContext);
-
-  return (
-    <MainEmptyLayout>
-      <ProductList productsData={productsData} />
-    </MainEmptyLayout>
-  );
-};
+const MainPage = () => (
+  <MainEmptyLayout>
+    <ProductList />
+  </MainEmptyLayout>
+);
 
 export default MainPage;
+

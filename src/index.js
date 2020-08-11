@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import loadProduct from '@/services/loadProduct';
 import CartPage from '@/page/CartPage';
-import DBProductsContext from '@/db/products';
+import DBProducts from '@/db/DBProducts';
 import DBCart from '@/db/DBCart';
 import MainPage from '@/page/MainPage';
 import {
@@ -12,22 +11,20 @@ import {
 } from 'react-router-dom';
 import DBCurrency from '@/db/DBCurrency';
 
-loadProduct().then((productsData) => {
-  ReactDOM.render(
-    (
-      <Router>
-        <DBProductsContext.Provider value={productsData}>
-          <DBCurrency>
-            <DBCart>
-              <Switch>
-                <Route exact path="/" component={MainPage} />
-                <Route exact path="/cart" component={CartPage} />
-              </Switch>
-            </DBCart>
-          </DBCurrency>
-        </DBProductsContext.Provider>
-      </Router>
-    ),
-    document.querySelector('#root'),
-  );
-});
+ReactDOM.render(
+  (
+    <Router>
+      <DBProducts>
+        <DBCurrency>
+          <DBCart>
+            <Switch>
+              <Route exact path="/" component={MainPage} />
+              <Route exact path="/cart" component={CartPage} />
+            </Switch>
+          </DBCart>
+        </DBCurrency>
+      </DBProducts>
+    </Router>
+  ),
+  document.querySelector('#root'),
+);

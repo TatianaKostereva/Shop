@@ -14,8 +14,8 @@ const ProductListView = ({ product }) => {
         </div>
         <div className="card-body">
           <h5 className="card-title">{product.title}</h5>
-          <ProductRate id={product.id} />
-          <Price product={product} />
+          <ProductRate key={product.id} id={product.id} />
+          <Price key={product.title} product={product} />
           <button
             className="product-add-to-cart"
             data-button-role="add-to-cart"

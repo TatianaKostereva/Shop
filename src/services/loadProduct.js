@@ -1,6 +1,6 @@
 import { getUrl } from '@/services/constants';
 
-const url = getUrl('products');
-const loadProduct = () => fetch(url).then((res) => res.json());
+const loadProduct = (start, end) => fetch(getUrl('products', start, end)).then((res) => res.json());
+export const loadProductsAll = () => fetch(getUrl('products')).then((res) => res.json());
 
 export default loadProduct;

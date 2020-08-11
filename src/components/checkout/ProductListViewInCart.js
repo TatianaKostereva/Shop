@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import DBProductsContext from '@/db/products';
+import { DBProductsContext } from '@/db/DBProducts';
 import { DBCartContext } from '@/db/DBCart';
 import ProductRate from '@/components/products/rate/ProductRate';
 import Price from '@/components/ui/Price/Price';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
-  const product = useContext(DBProductsContext).find((product) => product.id === id);
+  const { productsListAll } = useContext(DBProductsContext);
+  const product = productsListAll.find((product) => product.id === id);
 
   return (
     <div data-product-id={product.id} className="product-wrapper box-inner-col description-col">

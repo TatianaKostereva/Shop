@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import CartService from '@/services/CartService';
 import CheckoutProductList from '@/components/checkout/CheckoutProductList';
 import EmptyLayout from '@/components/ui/Layout/EmptyLayout';
-import DBProductsContext from '@/db/products';
 import { DBCartContext } from '@/db/DBCart';
+import { DBProductsContext } from '@/db/DBProducts';
 
 const CartPage = () => {
-  const productsData = useContext(DBProductsContext);
+  const { productsListAll } = useContext(DBProductsContext);
   const cart = useContext(DBCartContext);
-  const products = CartService.getProducts(cart.products, productsData);
+  const products = CartService.getProducts(cart.products, productsListAll);
 
   return (
     <EmptyLayout>
