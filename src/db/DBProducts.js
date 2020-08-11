@@ -23,8 +23,10 @@ const DBProducts = ({ children }) => {
     setLoaded(false);
     loadProduct(start, end)
       .then((data) => {
-        setProductsList([...productsList, ...data]);
-        setLoaded(true);
+        setTimeout(() => {
+          setProductsList([...productsList, ...data]);
+          setLoaded(true);
+        }, 2000);
       });
   }, [productsList]);
 

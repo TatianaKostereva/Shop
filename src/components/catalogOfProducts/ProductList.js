@@ -16,10 +16,6 @@ const ProductList = () => {
     setRange([range[1] + 1, range[1] + 3]);
   }, [setRange, range]);
 
-  if (!loaded) {
-    return false;
-  }
-
   return (
     <div className="row justify-content-end">
       <div className="col-lg-9">
@@ -27,9 +23,11 @@ const ProductList = () => {
         <div className="row homepage-cards">
           {productsList.map((item) => <ProductListView key={item.id} product={item} />)}
         </div>
-        <div>
-          <button className="showMore" onClick={loadMore}>Show more</button>
-        </div>
+        {loaded ? (
+          <div>
+            <button className="showMore" onClick={loadMore}>Show more</button>
+          </div>
+        ) : 'Loading...'}
       </div>
     </div>
   );
