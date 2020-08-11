@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import CartService from '@/services/CartService';
 import CheckoutProductList from '@/components/checkout/CheckoutProductList';
 import EmptyLayout from '@/components/ui/Layout/EmptyLayout';
@@ -6,9 +6,16 @@ import { DBCartContext } from '@/db/DBCart';
 import { DBProductsContext } from '@/db/DBProducts';
 
 const CartPage = () => {
-  const { productsListAll } = useContext(DBProductsContext);
+  const { storage, loaded, loadDataByID } = useContext(DBProductsContext);
   const cart = useContext(DBCartContext);
-  const products = CartService.getProducts(cart.products, productsListAll);
+  useEffect(() => {
+    loadDataByID(cart.products);
+  }, [cart.products]);
+
+  if (!loaded) {
+    return null;
+  }
+  const products = CartService.getProducts(cart.products, storage);
 
   return (
     <EmptyLayout>

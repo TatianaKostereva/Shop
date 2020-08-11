@@ -1,45 +1,60 @@
 import React, {
-  useMemo, useState, useCallback, useEffect,
+  useMemo, useState, useCallback
 } from 'react';
-import loadProduct, { loadProductsAll } from '@/services/loadProduct';
+import loadProduct, { loadProductByIds } from '@/services/loadProduct';
 
 export const DBProductsContext = React.createContext(
   [],
 );
 
 const DBProducts = ({ children }) => {
-  const [productsList, setProductsList] = useState([]);
-  const [productsListAll, setProductsListAll] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const [storage, setStorage] = useState({});
 
-  useEffect(() => {
-    loadProductsAll()
-      .then((data) => {
-        setProductsListAll(data);
-      });
-  }, []);
+  const [productsList, setProductsList] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   const loadData = useCallback((start, end) => {
     setLoaded(false);
     loadProduct(start, end)
       .then((data) => {
-        setTimeout(() => {
-          setProductsList([...productsList, ...data]);
-          setLoaded(true);
-        }, 2000);
+        const newStorage = { ...storage };
+        data.forEach((item) => {
+          newStorage[item.id] = item;
+        });
+
+        setStorage(newStorage);
+        setProductsList(Object.values(newStorage));
+        setLoaded(true);
       });
-  }, [productsList]);
+  }, [storage]);
+
+  const loadDataByID = useCallback((ids) => {
+    setLoaded(false);
+    loadProductByIds(ids)
+      .then((data) => {
+        const newStorage = { ...storage };
+        data.forEach((item) => {
+          newStorage[item.id] = item;
+        });
+
+        setStorage(newStorage);
+        setProductsList(Object.values(newStorage));
+        setLoaded(true);
+      });
+  }, [storage]);
 
   const productsStore = useMemo(() => ({
     productsList,
+    loadDataByID,
     loaded,
     loadData,
-    productsListAll,
+    storage,
   }), [
     productsList,
+    loadDataByID,
     loaded,
     loadData,
-    productsListAll,
+    storage,
   ]);
 
   return (

@@ -6,8 +6,8 @@ const getProductsId = () => {
   return JSON.parse(productsLocalStorage) || [];
 };
 
-const getProducts = (idProductsInCart, productsData = []) => {
-  const listOfProducts = idProductsInCart.map((id) => productsData.find((product) => product.id == id));
+const getProducts = (idProductsInCart, productsStorage) => {
+  const listOfProducts = idProductsInCart.map((id) => productsStorage[id]);
 
   const productsInCart = listOfProducts.reduce((obj, item) => {
     if (!obj.hasOwnProperty(item.id)) {
