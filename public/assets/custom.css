@@ -538,10 +538,7 @@ form button[type="submit"]:not(.btn-send) {
     height: 34px;
     top: 50%;
     margin-top: -17px;
-}
-
-.main-carousel .carousel-control-next:hover, .main-carousel .carousel-control-prev:hover {
-    background-color: rgba(255, 255, 255, 1);
+    border-radius: .25rem;
 }
 
 .main-carousel .carousel-control-next {

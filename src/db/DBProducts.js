@@ -1,5 +1,5 @@
 import React, {
-  useMemo, useState, useCallback
+  useMemo, useState, useCallback,
 } from 'react';
 import loadProduct, { loadProductByIds } from '@/services/loadProduct';
 
@@ -8,8 +8,8 @@ export const DBProductsContext = React.createContext(
 );
 
 const DBProducts = ({ children }) => {
+  const [productsInCart, setProductsInCart] = useState([]);
   const [storage, setStorage] = useState({});
-
   const [productsList, setProductsList] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -32,29 +32,23 @@ const DBProducts = ({ children }) => {
     setLoaded(false);
     loadProductByIds(ids)
       .then((data) => {
-        const newStorage = { ...storage };
-        data.forEach((item) => {
-          newStorage[item.id] = item;
-        });
-
-        setStorage(newStorage);
-        setProductsList(Object.values(newStorage));
+        setProductsInCart(data);
         setLoaded(true);
       });
-  }, [storage]);
+  }, [productsInCart]);
 
   const productsStore = useMemo(() => ({
     productsList,
     loadDataByID,
     loaded,
     loadData,
-    storage,
+    productsInCart,
   }), [
     productsList,
     loadDataByID,
     loaded,
     loadData,
-    storage,
+    productsInCart,
   ]);
 
   return (

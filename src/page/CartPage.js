@@ -6,8 +6,10 @@ import { DBCartContext } from '@/db/DBCart';
 import { DBProductsContext } from '@/db/DBProducts';
 
 const CartPage = () => {
-  const { storage, loaded, loadDataByID } = useContext(DBProductsContext);
+  const { productsInCart, loaded, loadDataByID } = useContext(DBProductsContext);
+
   const cart = useContext(DBCartContext);
+
   useEffect(() => {
     loadDataByID(cart.products);
   }, [cart.products]);
@@ -15,7 +17,8 @@ const CartPage = () => {
   if (!loaded) {
     return null;
   }
-  const products = CartService.getProducts(cart.products, storage);
+  console.log(productsInCart);
+  const products = CartService.getProducts(cart.products, productsInCart);
 
   return (
     <EmptyLayout>

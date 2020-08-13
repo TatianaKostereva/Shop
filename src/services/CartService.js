@@ -7,7 +7,7 @@ const getProductsId = () => {
 };
 
 const getProducts = (idProductsInCart, productsStorage) => {
-  const listOfProducts = idProductsInCart.map((id) => productsStorage[id]);
+  const listOfProducts = idProductsInCart.map((id) => productsStorage.find((product) => product.id == id));
 
   const productsInCart = listOfProducts.reduce((obj, item) => {
     if (!obj.hasOwnProperty(item.id)) {

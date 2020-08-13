@@ -1,26 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainHeader from '@/components/ui/Header/MainHeader/MainHeader';
 import Footer from '@/components/ui/Footer/Footer';
 import Menu from '@/components/ui/Menu/Menu';
 import Carousel from '@/components/ui/Carousel/Carousel';
-
-const slides = [
-  {
-    id: 0,
-    title: 'BEST LAPTOP DEALS',
-    img: './assets/images/default-slide-img.jpg',
-  },
-  {
-    id: 1,
-    title: 'BEST HEADPHONES DEALS',
-    img: './assets/images/default-slide-img.jpg',
-  },
-  {
-    id: 2,
-    title: 'BEST SPEAKERS DEALS',
-    img: './assets/images/default-slide-img.jpg',
-  },
-];
+import loadSlides from '@/services/loadSlides';
 
 const menu = [
   {
@@ -53,6 +36,12 @@ const MainEmptyLayout = ({ children }) => {
   const [showBackDrop, setShowBackDrop] = useState();
   const backDropClassName = `backdrop ${showBackDrop && 'show'}`;
 
+  const [slides, setSlides] = useState([]);
+
+  useEffect(() => {
+    loadSlides().then(setSlides);
+  }, []);
+
   return (
     <>
       <MainHeader />
@@ -64,7 +53,7 @@ const MainEmptyLayout = ({ children }) => {
               <Menu menu={menu} setShowBackDrop={setShowBackDrop} />
             </div>
             <div className="col-lg-9 carousel">
-              <Carousel slides={slides} />
+              {slides && <Carousel slides={slides} />}
             </div>
           </div>
         </div>

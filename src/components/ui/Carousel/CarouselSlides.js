@@ -5,7 +5,7 @@ const CarouselSlides = ({ carouselItem, current }) => {
 
   return (
     <div className={className}>
-      <img src={carouselItem.img} alt="ActiveSlide" />
+      <img src={carouselItem.imageUrl} alt="ActiveSlide" />
       <div className="container">
         <div className="carousel-caption">
           <h3 className="h1">{carouselItem.title}</h3>

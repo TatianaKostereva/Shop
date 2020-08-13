@@ -2,7 +2,7 @@ import React from 'react';
 import CarouselSlides from '@/components/ui/Carousel/CarouselSlides';
 import useCarousel from '@/components/ui/Carousel/hooks/useCarousel';
 
-const Carousel = ({ slides }) => {
+const Carousel = ({ slides = [] }) => {
   const {
     index,
     moveNextSlide,
