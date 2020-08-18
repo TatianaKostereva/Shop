@@ -1,23 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import CartService from '@/services/CartService';
 import CheckoutProductList from '@/components/checkout/CheckoutProductList';
 import EmptyLayout from '@/components/ui/Layout/EmptyLayout';
-import { DBCartContext } from '@/db/DBCart';
 import { DBProductsContext } from '@/db/DBProducts';
+import useDataSource, { DATA_LOADED } from '@/db/hook/useDataSource';
+import { DBCartContext } from '@/db/DBCart';
 
 const CartPage = () => {
-  const { productsInCart, loaded, loadDataByID } = useContext(DBProductsContext);
-
   const cart = useContext(DBCartContext);
+  const { data: productsInCart, status } = useDataSource(DBProductsContext, cart.products);
 
-  useEffect(() => {
-    loadDataByID(cart.products);
-  }, [cart.products]);
-
-  if (!loaded) {
+  if (status !== DATA_LOADED) {
     return null;
   }
-  console.log(productsInCart);
   const products = CartService.getProducts(cart.products, productsInCart);
 
   return (

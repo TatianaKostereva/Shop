@@ -30,7 +30,7 @@ const DBProducts = ({ children }) => {
 
   const loadDataByID = useCallback((ids) => {
     setLoaded(false);
-    loadProductByIds(ids)
+    return loadProductByIds(ids)
       .then((data) => {
         setProductsInCart(data);
         setLoaded(true);
