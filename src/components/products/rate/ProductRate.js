@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Rate from '@/components/core/Rate/Rate';
-import loadReviews from '@/services/loadReviews';
+import { DBProductsContext } from '@/db/DBProducts';
 
 const ProductRate = ({ id }) => {
-  const [reviews, setReviews] = useState(null);
+  const { reviews } = useContext(DBProductsContext);
 
-  useEffect(() => {
-    loadReviews(id).then(setReviews);
-  }, [id]);
-
-  return reviews && <Rate reviews={reviews} />;
+  return reviews && <Rate reviews={reviews} id={id} />;
 };
 
 export default ProductRate;

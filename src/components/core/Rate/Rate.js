@@ -1,12 +1,14 @@
 import React from 'react';
 import getStars from '@/components/core/Rate/utils/getStars';
 
-const Rate = ({ reviews = [] }) => {
-  const stars = getStars(reviews);
+const Rate = ({ reviews = [], id }) => {
+  const res = reviews.filter((data) => data.product_id === id);
+  const stars = getStars(res);
 
   const starsRender = new Array(5).fill('').map((value, index) => {
     let modificator;
-    if (reviews.length !== 0) {
+
+    if (res.length !== 0) {
       modificator = index < stars ? 'checked' : 'active';
     }
     const iconClassName = `icon-star ${modificator}`;
@@ -17,7 +19,7 @@ const Rate = ({ reviews = [] }) => {
   return (
     <div className="rate">
       {starsRender}
-      <span className="rate-amount ml-2">{reviews.length}</span>
+      <span className="rate-amount ml-2">{res.length}</span>
     </div>
   );
 };

@@ -4,7 +4,7 @@ const useMenu = ({ setShowBackDrop }) => {
   const [currentItem, setCurrentItem] = useState(null);
 
   const showDropdownMenu = (event) => {
-    const currentMenuIndex = event.currentTarget.dataset.menuTo;
+    const currentMenuIndex = +event.currentTarget.dataset.menuTo;
 
     setCurrentItem(currentMenuIndex);
     setShowBackDrop(true);

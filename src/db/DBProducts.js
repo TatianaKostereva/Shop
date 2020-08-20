@@ -2,6 +2,7 @@ import React, {
   useMemo, useState, useCallback,
 } from 'react';
 import loadProduct, { loadProductByIds } from '@/services/loadProduct';
+import loadReviews, { loadReviewsById } from '@/services/loadReviews';
 
 export const DBProductsContext = React.createContext(
   [],
@@ -12,9 +13,11 @@ const DBProducts = ({ children }) => {
   const [storage, setStorage] = useState({});
   const [productsList, setProductsList] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   const loadData = useCallback((start, end) => {
     setLoaded(false);
+    loadReviews(start, end).then((res) => setReviews([...reviews, ...res]));
     loadProduct(start, end)
       .then((data) => {
         const newStorage = { ...storage };
@@ -30,6 +33,7 @@ const DBProducts = ({ children }) => {
 
   const loadDataByID = useCallback((ids) => {
     setLoaded(false);
+    loadReviewsById(ids).then(setReviews);
     return loadProductByIds(ids)
       .then((data) => {
         setProductsInCart(data);
@@ -43,12 +47,14 @@ const DBProducts = ({ children }) => {
     loaded,
     loadData,
     productsInCart,
+    reviews,
   }), [
     productsList,
     loadDataByID,
     loaded,
     loadData,
     productsInCart,
+    reviews,
   ]);
 
   return (

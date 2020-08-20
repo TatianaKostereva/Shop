@@ -1,5 +1,6 @@
 import { getUrl } from '@/services/constants';
 
-const loadReviews = (productId) => fetch(getUrl('reviews', 'get_by_product', productId)).then((res) => res.json());
+const loadReviews = (start, end) => fetch(getUrl('reviews', start, end)).then((res) => res.json());
+export const loadReviewsById = (ids) => fetch(getUrl('reviews', 'load_by_ids', ids)).then((res) => res.json());
 
 export default loadReviews;
