@@ -1,7 +1,7 @@
 import React from 'react';
 import useMenu from '@/components/ui/Menu/hooks/useMenu';
 
-const Menu = ({menu, setShowBackDrop}) => {
+const Menu = ({ menu, setShowBackDrop }) => {
   const {
     showDropdownMenu,
     hideDropdownMenu,

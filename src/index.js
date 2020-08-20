@@ -10,20 +10,23 @@ import {
   Route,
 } from 'react-router-dom';
 import DBCurrency from '@/db/DBCurrency';
+import DBReviews from '@/db/DBReviews';
 
 ReactDOM.render(
   (
     <Router>
-      <DBProducts>
-        <DBCurrency>
-          <DBCart>
-            <Switch>
-              <Route exact path="/" component={MainPage} />
-              <Route exact path="/cart" component={CartPage} />
-            </Switch>
-          </DBCart>
-        </DBCurrency>
-      </DBProducts>
+      <DBReviews>
+        <DBProducts>
+          <DBCurrency>
+            <DBCart>
+              <Switch>
+                <Route exact path="/" component={MainPage} />
+                <Route exact path="/cart" component={CartPage} />
+              </Switch>
+            </DBCart>
+          </DBCurrency>
+        </DBProducts>
+      </DBReviews>
     </Router>
   ),
   document.querySelector('#root'),

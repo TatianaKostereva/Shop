@@ -1,8 +1,7 @@
 import React from 'react';
 import getStars from '@/components/core/Rate/utils/getStars';
 
-const Rate = ({ reviews = [], id }) => {
-  const res = reviews.filter((data) => data.product_id === id);
+const Rate = ({ res }) => {
   const stars = getStars(res);
 
   const starsRender = new Array(5).fill('').map((value, index) => {
