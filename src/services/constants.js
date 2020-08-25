@@ -9,7 +9,7 @@ export const getUrl = (...args) => {
   for (let arg of args) {
     const checking = isObject(arg);
     if (checking) {
-      arg = arg.reduce((prev, item) => {
+      arg = arg.reduce((prev, item) => { // TODO googling querystring
         prev += `ids=${item}&`;
         return prev;
       }, '?');

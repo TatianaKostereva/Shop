@@ -7,23 +7,37 @@ export const DBReviewsContext = React.createContext(
   [],
 );
 
+let debouncePromise = null;
+let debounceIds = [];
+
 const DBReviews = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const [storage, setStorage] = useState({});
 
   const loadDataByIDs = useCallback((ids) => {
-    setLoaded(false);
-    return loadReviewsById(ids)
-      .then((data) => {
-        const newStorage = { ...storage };
-        data.forEach((item) => {
-          newStorage[item.id] = item;
-        });
+    debounceIds = [...debounceIds, ids];
+    if (!debouncePromise) {
+      debouncePromise = new Promise((resolve) => {
+        setTimeout(resolve, 100);
+      }).then(() => {
+        loadReviewsById(debounceIds)
+          .then((data) => {
+            const newStorage = {};
+            data.forEach((item) => {
+              newStorage[item.id] = item;
+            });
 
-        setStorage((state) => ({ ...state, ...newStorage }));
-        setLoaded(true);
+            setStorage((state) => ({ ...state, ...newStorage }));
+            setLoaded(true);
+          });
+
+        debouncePromise = null;
+        debounceIds = [];
       });
-  }, [storage]);
+    }
+
+    return debouncePromise;
+  }, []);
 
   const reviewsStore = useMemo(() => ({
     loadDataByIDs,
