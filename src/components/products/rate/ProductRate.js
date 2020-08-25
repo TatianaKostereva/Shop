@@ -8,8 +8,8 @@ const ProductRate = ({ id }) => {
     loadDataByIDs([id]);
   }, [id]);
 
-  const res = Object.values(storage).filter(item => item.product_id === id);
-  return res.length > 0 ? <Rate res={res} /> : null;
+  const res = Object.values(storage).filter((item) => item.product_id === id);
+  return <Rate res={res} />;
 };
 
 export default ProductRate;

@@ -20,12 +20,12 @@ const DBReviews = ({ children }) => {
           newStorage[item.id] = item;
         });
 
-        setStorage(newStorage);
+        setStorage((state) => ({ ...state, ...newStorage }));
         setLoaded(true);
       });
   }, [storage]);
 
-  const productsStore = useMemo(() => ({
+  const reviewsStore = useMemo(() => ({
     loadDataByIDs,
     loaded,
     storage,
@@ -36,7 +36,7 @@ const DBReviews = ({ children }) => {
   ]);
 
   return (
-    <DBReviewsContext.Provider value={productsStore}>
+    <DBReviewsContext.Provider value={reviewsStore}>
       {children}
     </DBReviewsContext.Provider>
   );

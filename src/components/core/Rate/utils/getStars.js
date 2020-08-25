@@ -4,6 +4,6 @@ const getStars = (res = []) => {
   }
   const stars = res.reduce((prevValue, item) => prevValue + +item.stars, 0) / res.length;
   return Math.floor(stars);
-}
+};
 
 export default getStars;
