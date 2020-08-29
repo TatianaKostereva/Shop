@@ -3,7 +3,7 @@ const Debounce = (func) => {
   let debounceIds = [];
 
   return (ids) => {
-    debounceIds = [...debounceIds, ids];
+    debounceIds = [...debounceIds, ...ids];
     if (!debouncePromise) {
       debouncePromise = new Promise((resolve) => {
         setTimeout(resolve, 100);

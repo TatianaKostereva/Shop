@@ -8,28 +8,26 @@ export const DBReviewsContext = React.createContext(
   [],
 );
 
+const compareObjects = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
 const DBReviews = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const [storage, setStorage] = useState({});
   const [storageForIDs, setStorageForIDs] = useState({});
 
   const loadDataByIDs = useCallback((ids) => {
-    console.log(ids);
+    const oldStorageForIDs = { ...storageForIDs };
     const newStorageForIDs = { ...storageForIDs };
-    const clone = { ...newStorageForIDs };
-    console.log(clone);
-    for (const item of ids) {
-      newStorageForIDs[item] = item;
+
+    for (const id of ids) {
+      newStorageForIDs[id] = id;
     }
-    const strClone = JSON.stringify(clone);
-    const strNewStorageForIDs = JSON.stringify(newStorageForIDs);
-    console.log(newStorageForIDs);
-    if (strClone !== strNewStorageForIDs) {
+    if (!compareObjects(newStorageForIDs, oldStorageForIDs)) {
       setStorageForIDs(newStorageForIDs);
     }
   }, [storageForIDs]);
 
-  useMemo(() => {
+  useEffect(() => {
     loadReviewsById(Object.values(storageForIDs))
       .then((data) => {
         const newStorage = {};
