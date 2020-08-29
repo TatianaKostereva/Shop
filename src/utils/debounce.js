@@ -4,9 +4,10 @@ const Debounce = (func) => {
 
   return (ids) => {
     debounceIds = [...debounceIds, ...ids];
+
     if (!debouncePromise) {
       debouncePromise = new Promise((resolve) => {
-        setTimeout(resolve, 100);
+        setTimeout(resolve, 3000);
       }).then(() => {
         func(debounceIds);
         debouncePromise = null;

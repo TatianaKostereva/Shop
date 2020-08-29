@@ -1,8 +1,9 @@
 import React, {
-  useMemo, useState, useCallback, useEffect,
+  useMemo, useState, useCallback, useEffect, useContext,
 } from 'react';
 import { loadReviewsById } from '@/services/loadReviews';
 import useDebounce from '@/utils/hook/useDebounce';
+import { DATA_EMPTY, DATA_LOADED } from '@/db/hook/useDataSource';
 
 export const DBReviewsContext = React.createContext(
   [],
@@ -12,6 +13,18 @@ const DBReviews = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const [storage, setStorage] = useState({});
 
+  const setDataInStorage = useCallback((data) => {
+    setStorage((state) => {
+      const newStorage = { ...state };
+
+      data.forEach((item) => {
+        newStorage[item.product_id].data.push(item);
+      });
+
+      return newStorage;
+    });
+  }, []);
+
   const loadDataByIDs = useCallback((ids) => {
     const onlyNewIDs = [];
 
@@ -20,17 +33,30 @@ const DBReviews = ({ children }) => {
         onlyNewIDs.push(id);
       }
     }
-    console.log(onlyNewIDs);
     const shouldNewData = onlyNewIDs.length > 0;
     if (shouldNewData) {
+      const newStorage = {};
+      onlyNewIDs.forEach((id) => {
+        newStorage[id] = {
+          data: [],
+          status: DATA_EMPTY,
+        };
+      });
+      setStorage((state) => ({ ...state, ...newStorage }));
+
       loadReviewsById(onlyNewIDs)
-        .then((data) => {
-          const newStorage = {};
-          data.forEach((item) => {
-            newStorage[item.id] = item;
+        .then(setDataInStorage)
+        .then(() => {
+          setStorage((state) => {
+            const newStorageLoaded = { ...state };
+
+            for (const id of ids) {
+              newStorageLoaded[id].status = DATA_LOADED;
+            }
+
+            return { ...newStorageLoaded };
           });
 
-          setStorage((state) => ({ ...state, ...newStorage }));
           setLoaded(true);
         });
     }
@@ -53,6 +79,18 @@ const DBReviews = ({ children }) => {
       {children}
     </DBReviewsContext.Provider>
   );
+};
+
+export const useReviewData = (id) => {
+  const { storage, loadDataByIDs } = useContext(DBReviewsContext);
+  useEffect(() => {
+    loadDataByIDs([id]);
+  }, [id]);
+
+  return storage[id] || {
+    data: [],
+    status: DATA_EMPTY,
+  };
 };
 
 export default DBReviews;

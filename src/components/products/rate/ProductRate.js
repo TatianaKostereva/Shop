@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import Rate from '@/components/core/Rate/Rate';
-import { DBReviewsContext } from '@/db/DBReviews';
+import { useReviewData } from '@/db/DBReviews';
+import { DATA_LOADED } from '@/db/hook/useDataSource';
 
 const ProductRate = ({ id }) => {
-  const { storage, loadDataByIDs } = useContext(DBReviewsContext);
-  useEffect(() => {
-    loadDataByIDs([id]);
-  }, [id]);
+  const res = useReviewData([id]);
 
-  const res = Object.values(storage).filter((item) => item.product_id === id);
-  return <Rate res={res} />;
+  if (res.status !== DATA_LOADED) {
+    return null;
+  }
+  return <Rate res={res.data} />;
 };
 
 export default ProductRate;
