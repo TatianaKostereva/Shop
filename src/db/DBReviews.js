@@ -8,37 +8,33 @@ export const DBReviewsContext = React.createContext(
   [],
 );
 
-const compareObjects = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-
 const DBReviews = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const [storage, setStorage] = useState({});
-  const [storageForIDs, setStorageForIDs] = useState({});
 
   const loadDataByIDs = useCallback((ids) => {
-    const oldStorageForIDs = { ...storageForIDs };
-    const newStorageForIDs = { ...storageForIDs };
+    const onlyNewIDs = [];
 
     for (const id of ids) {
-      newStorageForIDs[id] = id;
+      if (!storage[id]) {
+        onlyNewIDs.push(id);
+      }
     }
-    if (!compareObjects(newStorageForIDs, oldStorageForIDs)) {
-      setStorageForIDs(newStorageForIDs);
-    }
-  }, [storageForIDs]);
+    console.log(onlyNewIDs);
+    const shouldNewData = onlyNewIDs.length > 0;
+    if (shouldNewData) {
+      loadReviewsById(onlyNewIDs)
+        .then((data) => {
+          const newStorage = {};
+          data.forEach((item) => {
+            newStorage[item.id] = item;
+          });
 
-  useEffect(() => {
-    loadReviewsById(Object.values(storageForIDs))
-      .then((data) => {
-        const newStorage = {};
-        data.forEach((item) => {
-          newStorage[item.id] = item;
+          setStorage((state) => ({ ...state, ...newStorage }));
+          setLoaded(true);
         });
-
-        setStorage((state) => ({ ...state, ...newStorage }));
-        setLoaded(true);
-      });
-  }, [storageForIDs]);
+    }
+  }, [storage]);
 
   const loadDataByIDsDebounced = useDebounce(loadDataByIDs);
 
