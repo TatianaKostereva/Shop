@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import Debounce from '@/utils/debounce';
+import debounce from '@/utils/debounce';
 
-const useDebounce = (func) => useCallback(Debounce(func), [func]);
+const useDebounce = (func) => useCallback(debounce(func), [func]);
 
 export default useDebounce;

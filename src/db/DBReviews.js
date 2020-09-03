@@ -18,8 +18,10 @@ const DBReviews = ({ children }) => {
       const newStorage = { ...state };
 
       data.forEach((item) => {
+        // console.log(item)
         newStorage[item.product_id].data.push(item);
       });
+      // console.log(newStorage)
 
       return newStorage;
     });
@@ -28,7 +30,10 @@ const DBReviews = ({ children }) => {
   const loadDataByIDs = useCallback((ids) => {
     const onlyNewIDs = [];
 
+    //console.log(ids);
+
     for (const id of ids) {
+      // console.log(storage);
       if (!storage[id]) {
         onlyNewIDs.push(id);
       }
@@ -43,6 +48,8 @@ const DBReviews = ({ children }) => {
         };
       });
       setStorage((state) => ({ ...state, ...newStorage }));
+
+      // console.log(onlyNewIDs);
 
       loadReviewsById(onlyNewIDs)
         .then(setDataInStorage)
@@ -83,9 +90,16 @@ const DBReviews = ({ children }) => {
 
 export const useReviewData = (id) => {
   const { storage, loadDataByIDs } = useContext(DBReviewsContext);
+  const [storageForIDs, setStorageForIDs] = useState({});
+
   useEffect(() => {
-    loadDataByIDs([id]);
-  }, [id]);
+    const newStorage = { ...storageForIDs };
+    if (!newStorage[id]) {
+      newStorage[id] = id;
+    }
+    setStorageForIDs(newStorage);
+    loadDataByIDs(Object.values(newStorage));
+  }, []);
 
   return storage[id] || {
     data: [],
