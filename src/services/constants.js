@@ -1,20 +1,22 @@
-const API = 'http://localhost:3000';
+import queryString from 'query-string';
 
-function isObject(obj) {
-  return (typeof obj === 'object' && obj !== null) || typeof obj === 'function';
-}
+const API = 'http://localhost:3000';
 
 export const getUrl = (...args) => {
   let res = `${API}/`;
   for (let arg of args) {
-    const checking = isObject(arg);
-    if (checking) {
-      arg = arg.reduce((prev, item) => { // TODO googling querystring
-        prev += `ids=${item}&`;
-        return prev;
-      }, '?');
-    }
     res += `${arg}/`;
+  }
+  return res;
+};
+
+export const getUrlWithIds = ({ method, entity, params }) => {
+  let res = `${API}/${entity}/`;
+  if (method) {
+    res += `${method}/`;
+  }
+  if (params) {
+    res += '?' + queryString.stringify(params);
   }
   return res;
 };

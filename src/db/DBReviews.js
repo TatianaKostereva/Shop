@@ -18,10 +18,8 @@ const DBReviews = ({ children }) => {
       const newStorage = { ...state };
 
       data.forEach((item) => {
-        // console.log(item)
         newStorage[item.product_id].data.push(item);
       });
-      // console.log(newStorage)
 
       return newStorage;
     });
@@ -30,10 +28,7 @@ const DBReviews = ({ children }) => {
   const loadDataByIDs = useCallback((ids) => {
     const onlyNewIDs = [];
 
-    //console.log(ids);
-
     for (const id of ids) {
-      // console.log(storage);
       if (!storage[id]) {
         onlyNewIDs.push(id);
       }
@@ -48,8 +43,6 @@ const DBReviews = ({ children }) => {
         };
       });
       setStorage((state) => ({ ...state, ...newStorage }));
-
-      // console.log(onlyNewIDs);
 
       loadReviewsById(onlyNewIDs)
         .then(setDataInStorage)
