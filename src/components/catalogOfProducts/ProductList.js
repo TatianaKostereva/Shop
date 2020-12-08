@@ -4,16 +4,17 @@ import React, {
 import ProductListView from '@/components/catalogOfProducts/ProductListView';
 import { DBProductsContext } from '@/db/DBProducts';
 
-const ProductList = () => {
-  const { productsList, loaded, loadData } = useContext(DBProductsContext);
-  const [range, setRange] = useState([1, 6]);
+const ProductList = ({ ids }) => {
+  const { productsList, loaded, loadDataByID } = useContext(DBProductsContext);
+  const [range, setRange] = useState([0, 3]);
 
   useEffect(() => {
-    loadData(range[0], range[1]);
-  }, [range]);
+    const productsIdsForDisplay = ids.slice(range[0], range[1]);
+    loadDataByID(productsIdsForDisplay);
+  }, [range, ids, loadDataByID]);
 
   const loadMore = useCallback(() => {
-    setRange([range[1] + 1, range[1] + 3]);
+    setRange([range[0], range[1] + 3]);
   }, [setRange, range]);
 
   return (

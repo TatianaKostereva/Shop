@@ -33,9 +33,10 @@ const DBProducts = ({ children }) => {
     return loadProductByIds(ids)
       .then((data) => {
         setProductsInCart(data);
+        setProductsList(data);
         setLoaded(true);
       });
-  }, [productsInCart]);
+  }, []);
 
   const productsStore = useMemo(() => ({
     productsList,
