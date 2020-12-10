@@ -3,26 +3,26 @@ import MainEmptyLayout from '@/components/ui/Layout/MainEmptyLayout';
 import ProductList from '@/components/catalogOfProducts/ProductList';
 import getProductsForMain from '@/services/getProductsForMain';
 
+const useInit = (callback) => {
+  useEffect(() => {
+    callback();
+  }, []);
+};
+
 const MainPage = () => {
   const [idsList, setIdsList] = useState([]);
-  const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
+  useInit(() => {
     getProductsForMain()
       .then((data) => {
         setIdsList([...idsList, ...data]);
-        setLoaded(true);
       });
-  }, []);
+  });
 
-  const ids = idsList.reduce((acc, item) => {
-    acc = acc.concat(Object.values(item));
-    return acc;
-  }, []);
 
   return (
     <MainEmptyLayout>
-      <ProductList ids={ids} />
+      <ProductList ids={idsList} />
     </MainEmptyLayout>
   );
 };

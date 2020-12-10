@@ -6,8 +6,8 @@ import Price from '@/components/ui/Price/Price';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
-  const { productsInCart } = useContext(DBProductsContext);
-  const product = productsInCart.find((product) => product.id == id);
+  const { storage } = useContext(DBProductsContext);
+  const product = storage[id];
 
   return (
     <div data-product-id={product.id} className="product-wrapper box-inner-col description-col">

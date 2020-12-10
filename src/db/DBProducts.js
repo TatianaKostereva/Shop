@@ -1,55 +1,75 @@
 import React, {
   useMemo, useState, useCallback,
 } from 'react';
-import loadProduct, { loadProductByIds } from '@/services/loadProduct';
+import { loadProductByIds } from '@/services/loadProduct';
+import { DATA_EMPTY, DATA_LOADED } from '@/db/hook/useDataSource';
 
 export const DBProductsContext = React.createContext(
   [],
 );
 
 const DBProducts = ({ children }) => {
-  const [productsInCart, setProductsInCart] = useState([]);
   const [storage, setStorage] = useState({});
-  const [productsList, setProductsList] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  const loadData = useCallback((start, end) => {
-    setLoaded(false);
-    loadProduct(start, end)
-      .then((data) => {
-        const newStorage = { ...storage };
-        data.forEach((item) => {
-          newStorage[item.id] = item;
-        });
+  const setDataInStorage = useCallback((data) => {
+    setStorage((state) => {
+      const newStorage = { ...state };
 
-        setStorage(newStorage);
-        setProductsList(Object.values(newStorage));
-        setLoaded(true);
+      data.forEach((item) => {
+        newStorage[item.id] = item;
       });
-  }, [storage]);
 
-  const loadDataByID = useCallback((ids) => {
-    setLoaded(false);
-    return loadProductByIds(ids)
-      .then((data) => {
-        setProductsInCart(data);
-        setProductsList(data);
-        setLoaded(true);
-      });
+      return newStorage;
+    });
   }, []);
 
+  const loadDataByIDs = useCallback((ids) => {
+
+    const onlyNewIDs = [];
+
+    for (const id of ids) {
+      if (!storage[id]) {
+        onlyNewIDs.push(id);
+      }
+    }
+    const shouldNewData = onlyNewIDs.length > 0;
+    if (shouldNewData) {
+      const newStorage = {};
+      onlyNewIDs.forEach((id) => {
+        newStorage[id] = {
+          data: [],
+          status: DATA_EMPTY,
+        };
+      });
+      setStorage((state) => ({ ...state, ...newStorage }));
+
+      setLoaded(false);
+      loadProductByIds(onlyNewIDs)
+        .then(setDataInStorage)
+        .then(() => {
+          setStorage((state) => {
+            const newStorageLoaded = { ...state };
+            for (const id of ids) {
+              newStorageLoaded[id].status = DATA_LOADED;
+            }
+
+            return { ...newStorageLoaded };
+          });
+          setLoaded(true);
+        });
+    }
+  }, [storage]);
+
   const productsStore = useMemo(() => ({
-    productsList,
-    loadDataByID,
+    storage,
+    loadDataByIDs,
     loaded,
-    loadData,
-    productsInCart,
+    pageSize: 3,
   }), [
-    productsList,
-    loadDataByID,
+    storage,
+    loadDataByIDs,
     loaded,
-    loadData,
-    productsInCart,
   ]);
 
   return (

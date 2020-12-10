@@ -7,11 +7,11 @@ export const DATA_ERROR = 'DATA_ERROR';
 
 const useDataSource = (dbContext, ids) => {
   const [status, setStatus] = useState(DATA_EMPTY);
-  const { productsInCart, loaded, loadDataByID } = useContext(dbContext);
+  const { storage, loaded, loadDataByIDs } = useContext(dbContext);
 
   useEffect(() => {
     setStatus(DATA_LOADING);
-    loadDataByID(ids).then(() => {
+    loadDataByIDs(ids).then(() => {
       setStatus(DATA_LOADED);
     }).catch(() => {
       setStatus(DATA_ERROR);
@@ -23,7 +23,7 @@ const useDataSource = (dbContext, ids) => {
   }
 
   return {
-    data: productsInCart,
+    data: ids.map((id) => storage[id]),
     status,
   };
 };
