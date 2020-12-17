@@ -3,10 +3,16 @@ import { DBProductsContext } from '@/db/DBProducts';
 import { DBCartContext } from '@/db/DBCart';
 import ProductRate from '@/components/products/rate/ProductRate';
 import Price from '@/components/ui/Price/Price';
+import {DATA_LOADED} from "@/db/hook/useDataSource";
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
   const { storage } = useContext(DBProductsContext);
+
+  if (storage[id]?.status !== DATA_LOADED) {
+    return false;
+  }
+
   const product = storage[id];
 
   return (

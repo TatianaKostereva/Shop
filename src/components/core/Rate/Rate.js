@@ -7,7 +7,7 @@ const Rate = ({ res }) => {
   const starsRender = new Array(5).fill('').map((value, index) => {
     let modificator;
 
-    if (res.length !== 0) {
+    if (res.data.length !== 0) {
       modificator = index < stars ? 'checked' : 'active';
     }
     const iconClassName = `icon-star ${modificator}`;
@@ -18,7 +18,7 @@ const Rate = ({ res }) => {
   return (
     <div className="rate">
       {starsRender}
-      <span className="rate-amount ml-2">{res.length}</span>
+      <span className="rate-amount ml-2">{res.data.length}</span>
     </div>
   );
 };

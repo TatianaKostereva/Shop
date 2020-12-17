@@ -8,22 +8,40 @@ export const DATA_ERROR = 'DATA_ERROR';
 const useDataSource = (dbContext, ids) => {
   const [status, setStatus] = useState(DATA_EMPTY);
   const { storage, loaded, loadDataByIDs } = useContext(dbContext);
+  const [storageForIDs, setStorageForIDs] = useState({});
 
   useEffect(() => {
+    const newStorage = { ...storageForIDs };
+    ids.forEach((id) => {
+      if (!newStorage[id]) {
+        newStorage[id] = id;
+      }
+    });
+
     setStatus(DATA_LOADING);
-    loadDataByIDs(ids).then(() => {
+    setStorageForIDs(newStorage);
+    loadDataByIDs(Object.values(newStorage)).then(() => {
       setStatus(DATA_LOADED);
     }).catch(() => {
       setStatus(DATA_ERROR);
     });
-  }, [ids]);
+  }, []);
 
   if (!loaded) {
     return '...loading';
   }
 
+  for (let id of Object.values(storageForIDs)) {
+    if (storage[id] === undefined) {
+      return {
+        data: [],
+        status: DATA_EMPTY,
+      };
+    }
+  }
+
   return {
-    data: ids.map((id) => storage[id]),
+    data: Object.values(storageForIDs).map((id) => storage[id]),
     status,
   };
 };

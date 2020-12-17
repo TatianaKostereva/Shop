@@ -2,14 +2,9 @@ import React, {
   useMemo, useState, useCallback,
 } from 'react';
 import { loadReviewsById } from '@/services/loadReviews';
-import useDebounce from '@/utils/hook/useDebounce';
 import { DATA_EMPTY, DATA_LOADED } from '@/db/hook/useDataSource';
 
-export const DBReviewsContext = React.createContext(
-  [],
-);
-
-const DBReviews = ({ children }) => {
+const DBComponent = ({ children }, callback, context) => {
   const [loaded, setLoaded] = useState(false);
   const [storage, setStorage] = useState({});
 
@@ -18,7 +13,7 @@ const DBReviews = ({ children }) => {
       const newStorage = { ...state };
 
       data.forEach((item) => {
-        newStorage[item.product_id].data.push(item);
+        callback(newStorage, item);
       });
 
       return newStorage;
@@ -62,23 +57,29 @@ const DBReviews = ({ children }) => {
     }
   }, [storage]);
 
-  const loadDataByIDsDebounced = useDebounce(loadDataByIDs);
 
-  const reviewsStore = useMemo(() => ({
-    loadDataByIDs: loadDataByIDsDebounced,
+  const componentStore = useMemo(() => ({
+    loadDataByIDs,
     loaded,
     storage,
   }), [
-    loadDataByIDsDebounced,
+    loadDataByIDs,
     loaded,
     storage,
   ]);
 
   return (
-    <DBReviewsContext.Provider value={reviewsStore}>
+    <context.Provider value={componentStore}>
       {children}
-    </DBReviewsContext.Provider>
+    </context.Provider>
   );
 };
 
-export default DBReviews;
+export default DBComponent;
+
+// const callback = (storage, item) => {
+//   storage[item.id] = item;
+//   return true;
+// };
+//
+// const DBProducts = DBComponent({ children }, callback, DBProductsContext);
