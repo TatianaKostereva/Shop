@@ -4,9 +4,11 @@ import React, {
 import ProductListView from '@/components/catalogOfProducts/ProductListView';
 import { DBProductsContext } from '@/db/DBProducts';
 
+const pageSize = 3;
+
 const ProductList = ({ ids }) => {
   const {
-    storage, loaded, loadDataByIDs, pageSize,
+    loaded, loadDataByIDs,
   } = useContext(DBProductsContext);
   const [range, setRange] = useState(pageSize);
 
@@ -25,7 +27,7 @@ const ProductList = ({ ids }) => {
       <div className="col-lg-9">
         <h3 className="section-title">Top Recommendations for You</h3>
         <div className="row homepage-cards">
-          {productsIdsForDisplay.map((id) => storage[id] !== undefined && storage[id].status !== 'DATA_EMPTY' && <ProductListView key={id} product={storage[id]} />)}
+          {productsIdsForDisplay.map((id) => <ProductListView key={id} id={id} />)}
         </div>
         {loaded && productsIdsForDisplay.length !== ids.length ? (
           <div>
