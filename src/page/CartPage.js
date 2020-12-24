@@ -3,12 +3,13 @@ import CartService from '@/services/CartService';
 import CheckoutProductList from '@/components/checkout/CheckoutProductList';
 import EmptyLayout from '@/components/ui/Layout/EmptyLayout';
 import { DBProductsContext } from '@/db/DBProducts';
-import useDataSource, { DATA_LOADED } from '@/db/hook/useDataSource';
+import useDataSourceList from '@/db/hook/useDataSourceList';
 import { DBCartContext } from '@/db/DBCart';
+import { DATA_LOADED } from '@/db/constants';
 
 const CartPage = () => {
   const cart = useContext(DBCartContext);
-  const { data: productsInCart, status } = useDataSource(DBProductsContext, cart.products);
+  const { data: productsInCart, status } = useDataSourceList(DBProductsContext, cart.products);
 
   if (status !== DATA_LOADED) {
     return null;

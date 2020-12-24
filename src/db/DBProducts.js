@@ -2,7 +2,7 @@ import React, {
   useMemo, useState, useCallback,
 } from 'react';
 import { loadProductByIds } from '@/services/loadProduct';
-import { DATA_EMPTY, DATA_LOADED } from '@/db/hook/useDataSource';
+import { DATA_LOADING, DATA_LOADED } from '@/db/constants';
 
 export const DBProductsContext = React.createContext(
   [],
@@ -17,7 +17,9 @@ const DBProducts = ({ children }) => {
       const newStorage = { ...state };
 
       data.forEach((item) => {
-        newStorage[item.id] = item;
+        newStorage[item.id] = {
+          data: item,
+        };
       });
 
       return newStorage;
@@ -33,34 +35,32 @@ const DBProducts = ({ children }) => {
       }
     }
 
-    if (onlyNewIDs.length === 0) {
-      return false;
-    }
-
-    const newStorage = {};
-    onlyNewIDs.forEach((id) => {
-      newStorage[id] = {
-        data: [],
-        status: DATA_EMPTY,
-      };
-    });
-    setStorage((state) => ({ ...state, ...newStorage }));
-
-    setLoaded(false);
-    await loadProductByIds(onlyNewIDs)
-      .then(setDataInStorage)
-      .then(() => {
-        setStorage((state) => {
-          const newStorageLoaded = { ...state };
-          for (const id of ids) {
-            newStorageLoaded[id].status = DATA_LOADED;
-          }
-
-          return { ...newStorageLoaded };
-        });
-        setLoaded(true);
+    const shouldNewData = onlyNewIDs.length > 0;
+    if (shouldNewData) {
+      const newStorage = {};
+      onlyNewIDs.forEach((id) => {
+        newStorage[id] = {
+          data: [],
+          status: DATA_LOADING,
+        };
       });
-    return true;
+      setStorage((state) => ({ ...state, ...newStorage }));
+
+      setLoaded(false);
+      await loadProductByIds(onlyNewIDs)
+        .then(setDataInStorage)
+        .then(() => {
+          setStorage((state) => {
+            const newStorageLoaded = { ...state };
+            for (const id of ids) {
+              newStorageLoaded[id].status = DATA_LOADED;
+            }
+
+            return { ...newStorageLoaded };
+          });
+          setLoaded(true);
+        });
+    }
   }, [storage]);
 
   const productsStore = useMemo(() => ({

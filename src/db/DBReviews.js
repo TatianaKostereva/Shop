@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { loadReviewsById } from '@/services/loadReviews';
 import useDebounce from '@/utils/hook/useDebounce';
-import { DATA_EMPTY, DATA_LOADED } from '@/db/hook/useDataSource';
+import { DATA_LOADED, DATA_LOADING } from '@/db/constants';
 
 export const DBReviewsContext = React.createContext(
   [],
@@ -25,7 +25,7 @@ const DBReviews = ({ children }) => {
     });
   }, []);
 
-  const loadDataByIDs = useCallback((ids) => {
+  const loadDataByIDs = useCallback(async (ids) => {
     const onlyNewIDs = [];
 
     for (const id of ids) {
@@ -39,12 +39,12 @@ const DBReviews = ({ children }) => {
       onlyNewIDs.forEach((id) => {
         newStorage[id] = {
           data: [],
-          status: DATA_EMPTY,
+          status: DATA_LOADING,
         };
       });
       setStorage((state) => ({ ...state, ...newStorage }));
 
-      loadReviewsById(onlyNewIDs)
+      await loadReviewsById(onlyNewIDs)
         .then(setDataInStorage)
         .then(() => {
           setStorage((state) => {

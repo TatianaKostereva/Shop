@@ -1,16 +1,17 @@
 import React from 'react';
 import Rate from '@/components/core/Rate/Rate';
 import { DBReviewsContext } from '@/db/DBReviews';
-import useDataSource, { DATA_LOADED } from '@/db/hook/useDataSource';
+import useDataSource from '@/db/hook/useDataSource';
+import { DATA_LOADED } from '@/db/constants';
 
 const ProductRate = ({ id }) => {
-  const res = useDataSource(DBReviewsContext, [id]);
+  const reviewsDataSource = useDataSource(DBReviewsContext, id);
 
-  if (res.status !== DATA_LOADED) {
+  if (reviewsDataSource.status !== DATA_LOADED) {
     return null;
   }
 
-  return <Rate res={res.data[0]} />;
+  return <Rate reviews={reviewsDataSource.data} />;
 };
 
 export default ProductRate;

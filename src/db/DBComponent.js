@@ -2,7 +2,7 @@ import React, {
   useMemo, useState, useCallback,
 } from 'react';
 import { loadReviewsById } from '@/services/loadReviews';
-import { DATA_EMPTY, DATA_LOADED } from '@/db/hook/useDataSource';
+import { DATA_EMPTY, DATA_LOADED } from '@/db/constants';
 
 const DBComponent = ({ children }, callback, context) => {
   const [loaded, setLoaded] = useState(false);

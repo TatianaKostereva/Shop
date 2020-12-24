@@ -3,7 +3,7 @@ import Price from '@/components/ui/Price/Price';
 import { DBCartContext } from '@/db/DBCart';
 import { DBProductsContext } from '@/db/DBProducts';
 import ProductRate from '@/components/products/rate/ProductRate';
-import { DATA_LOADED } from '@/db/hook/useDataSource';
+import { DATA_LOADED } from '@/db/constants';
 
 const ProductListView = ({ id }) => {
   const { addToCart } = useContext(DBCartContext);
@@ -13,7 +13,7 @@ const ProductListView = ({ id }) => {
     return false;
   }
 
-  const product = storage[id];
+  const product = storage[id].data;
 
   return (
     <div data-product-id={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">

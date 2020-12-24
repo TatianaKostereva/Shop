@@ -1,8 +1,8 @@
-const getStars = (res = []) => {
-  if (res.data.length === 0) {
+const getStars = (reviews = []) => {
+  if (reviews.length === 0) {
     return 0;
   }
-  const stars = res.data.reduce((prevValue, item) => prevValue + +item.stars, 0) / res.data.length;
+  const stars = reviews.reduce((prevValue, item) => prevValue + +item.stars, 0) / reviews.length;
   return Math.floor(stars);
 };
 
