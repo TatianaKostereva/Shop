@@ -1,17 +1,18 @@
 import { useContext, useEffect } from 'react';
 import { DATA_LOADING } from '@/db/constants';
+import { DBContext } from '@/db/DBComponent';
 
-const useDataSourceList = (dbContext, ids) => {
-  const { storage, loadDataByIDs } = useContext(dbContext);
+const useDataSourceList = (key, ids) => {
+  const { storage, loadDataByIDs } = useContext(DBContext);
 
   useEffect(() => {
-    loadDataByIDs(ids);
-  }, [ids]);
+    loadDataByIDs(key, ids);
+  }, [key, ids]);
 
   return {
-    data: ids.map((id) => storage[id]?.data),
-    status: ids.every((id) => storage[id]?.status === storage[ids[0]]?.status)
-      ? storage[ids[0]]?.status || DATA_LOADING
+    data: ids.map((id) => storage[key]?.[id]?.data),
+    status: ids.every((id) => storage[key]?.[id]?.status === storage[key]?.[ids[0]]?.status)
+      ? storage[key]?.[ids[0]]?.status || DATA_LOADING
       : DATA_LOADING,
   };
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CartPage from '@/page/CartPage';
-import DBProducts from '@/db/DBProducts';
 import DBCart from '@/db/DBCart';
 import MainPage from '@/page/MainPage';
 import {
@@ -11,12 +10,13 @@ import {
 } from 'react-router-dom';
 import DBCurrency from '@/db/DBCurrency';
 import DBReviews from '@/db/DBReviews';
+import DBComponent from '@/db/DBComponent';
 
 ReactDOM.render(
   (
     <Router>
-      <DBReviews>
-        <DBProducts>
+      <DBComponent>
+        <DBReviews>
           <DBCurrency>
             <DBCart>
               <Switch>
@@ -25,8 +25,8 @@ ReactDOM.render(
               </Switch>
             </DBCart>
           </DBCurrency>
-        </DBProducts>
-      </DBReviews>
+        </DBReviews>
+      </DBComponent>
     </Router>
   ),
   document.querySelector('#root'),
