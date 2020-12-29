@@ -2,25 +2,25 @@ import React, {
   useCallback, useContext, useEffect, useState, useMemo,
 } from 'react';
 import ProductListView from '@/components/catalogOfProducts/ProductListView';
-import { DBProductsContext } from '@/db/DBProducts';
+import { DBContext, DATA_SOURCE_PRODUCT } from '@/db/DBComponent';
 
 const pageSize = 3;
 
 const ProductList = ({ ids }) => {
   const {
     loaded, loadDataByIDs,
-  } = useContext(DBProductsContext);
+  } = useContext(DBContext);
   const [range, setRange] = useState(pageSize);
 
   const productsIdsForDisplay = useMemo(() => ids.slice(0, range), [range, ids]);
 
   useEffect(() => {
-    loadDataByIDs(productsIdsForDisplay);
-  }, [productsIdsForDisplay, loadDataByIDs]);
+    loadDataByIDs(DATA_SOURCE_PRODUCT, productsIdsForDisplay);
+  }, [productsIdsForDisplay]);
 
   const loadMore = useCallback(() => {
     setRange(range + pageSize);
-  }, [setRange, range, pageSize]);
+  }, [setRange, range]);
 
   return (
     <div className="row justify-content-end">

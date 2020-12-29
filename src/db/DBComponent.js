@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { loadReviewsById } from '@/services/loadReviews';
 import { DATA_LOADED, DATA_LOADING } from '@/db/constants';
+import {loadProductByIds} from "@/services/loadProduct";
 
 export const DBContext = React.createContext(
   {},
@@ -26,9 +27,11 @@ const storageMapperByProductID = (storage, item) => {
 const config = {
   [DATA_SOURCE_PRODUCT]: {
     storageMapper: storageMapperByID,
+    loadDataByIDs: loadProductByIds,
   },
   [DATA_SOURCE_REVIEW]: {
     storageMapper: storageMapperByProductID,
+    loadDataByIDs: loadReviewsById,
   },
 };
 
@@ -42,9 +45,14 @@ const DBComponent = ({ children }) => {
 
       data.forEach((item) => {
         config[key].storageMapper(newStorage, item);
+
+        if (key === DATA_SOURCE_PRODUCT) {
+          console.log(newStorage)
+        }
+
       });
 
-      return { ...state, key: newStorage };
+      return { ...state, [key]: newStorage };
     });
   }, []);
 
@@ -56,6 +64,9 @@ const DBComponent = ({ children }) => {
         onlyNewIDs.push(id);
       }
     }
+
+    console.log(storage, 1)
+
     const shouldNewData = onlyNewIDs.length > 0;
     if (shouldNewData) {
       const newStorage = {};
@@ -67,7 +78,7 @@ const DBComponent = ({ children }) => {
       });
       setStorage((state) => ({ ...state, [key]: { ...state[key], ...newStorage } }));
 
-      loadReviewsById(onlyNewIDs)
+      config[key].loadDataByIDs(onlyNewIDs)
         .then((data) => setDataInStorage(key, data))
         .then(() => {
           setStorage((state) => {

@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
-import { DBProductsContext } from '@/db/DBProducts';
 import { DBCartContext } from '@/db/DBCart';
 import ProductRate from '@/components/products/rate/ProductRate';
 import Price from '@/components/ui/Price/Price';
 import { DATA_LOADED } from '@/db/constants';
+import { DATA_SOURCE_PRODUCT, DBContext } from '@/db/DBComponent';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);
-  const { storage } = useContext(DBProductsContext);
+  const { storage } = useContext(DBContext);
 
-  if (storage[id]?.status !== DATA_LOADED) {
+  if (storage[DATA_SOURCE_PRODUCT]?.[id]?.status !== DATA_LOADED) {
     return false;
   }
 
-  const product = storage[id].data;
+  const product = storage[DATA_SOURCE_PRODUCT]?.[id].data;
 
   return (
     <div data-product-id={product.id} className="product-wrapper box-inner-col description-col">
