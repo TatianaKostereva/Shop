@@ -3,7 +3,8 @@ import { DBCartContext } from '@/db/DBCart';
 import ProductRate from '@/components/products/rate/ProductRate';
 import Price from '@/components/ui/Price/Price';
 import { DATA_LOADED } from '@/db/constants';
-import { DATA_SOURCE_PRODUCT, DBContext } from '@/db/DBComponent';
+import { DATA_SOURCE_PRODUCT } from '@/db/dataSourceConfig';
+import { DBContext } from '@/db/DBComponent';
 
 const ProductListViewInCart = ({ id }) => {
   const { deleteProduct } = useContext(DBCartContext);

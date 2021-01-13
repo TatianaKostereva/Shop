@@ -1,19 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import Price from '@/components/ui/Price/Price';
 import { DBCartContext } from '@/db/DBCart';
-import { DBContext, DATA_SOURCE_PRODUCT } from '@/db/DBComponent';
+import { DATA_SOURCE_PRODUCT } from '@/db/dataSourceConfig';
 import ProductRate from '@/components/products/rate/ProductRate';
-import { DATA_LOADED } from '@/db/constants';
+import DataSourceProvider from '@/db/DataSourceProvider/DataSourceProvider';
 
-const ProductListView = ({ id }) => {
+const ProductListView = ({ data: product }) => {
   const { addToCart } = useContext(DBCartContext);
-  const { storage } = useContext(DBContext);
 
-  if (storage[DATA_SOURCE_PRODUCT]?.[id]?.status !== DATA_LOADED) {
-    return false;
-  }
-
-  const product = storage[DATA_SOURCE_PRODUCT]?.[id].data;
+  const handleAddProduct = useCallback(() => {
+    addToCart(product.id);
+  }, [product.id, addToCart]);
 
   return (
     <div data-product-id={product.id} className="products-list-product col-md-6 col-lg-4 mb-4">
@@ -28,9 +25,7 @@ const ProductListView = ({ id }) => {
           <button
             className="product-add-to-cart"
             data-button-role="add-to-cart"
-            onClick={() => {
-              addToCart(product.id);
-            }}
+            onClick={handleAddProduct}
           >
             Add to cart
           </button>
@@ -40,4 +35,4 @@ const ProductListView = ({ id }) => {
   );
 };
 
-export default ProductListView;
+export default DataSourceProvider(DATA_SOURCE_PRODUCT, ProductListView);

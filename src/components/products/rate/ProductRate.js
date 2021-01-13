@@ -2,7 +2,7 @@ import React from 'react';
 import Rate from '@/components/core/Rate/Rate';
 import useDataSource from '@/db/hook/useDataSource';
 import { DATA_LOADED } from '@/db/constants';
-import { DATA_SOURCE_REVIEW } from '@/db/DBComponent';
+import { DATA_SOURCE_REVIEW } from '@/db/dataSourceConfig';
 
 const ProductRate = ({ id }) => {
   const reviewsDataSource = useDataSource(DATA_SOURCE_REVIEW, id);

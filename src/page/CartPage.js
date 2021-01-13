@@ -5,7 +5,7 @@ import EmptyLayout from '@/components/ui/Layout/EmptyLayout';
 import useDataSourceList from '@/db/hook/useDataSourceList';
 import { DBCartContext } from '@/db/DBCart';
 import { DATA_LOADED } from '@/db/constants';
-import { DATA_SOURCE_PRODUCT } from '@/db/DBComponent';
+import { DATA_SOURCE_PRODUCT } from '@/db/dataSourceConfig';
 
 const CartPage = () => {
   const cart = useContext(DBCartContext);
