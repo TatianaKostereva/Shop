@@ -13,10 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 
-import MainEmptyLayout from '@/components/ui/Layout/MainEmptyLayout';
 import useDataSource from '@/db/hook/useDataSource';
 import { DATA_SOURCE_PRODUCT } from '@/db/dataSourceConfig';
 import { DATA_LOADED } from '@/db/constants';
+import EmptyLayoutWithMenu from '@/components/ui/Layout/EmptyLayoutWithMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,7 @@ const ProductPage = () => {
   const classes = useStyles();
 
   return (
-    <MainEmptyLayout showCarousel={false}>
+    <EmptyLayoutWithMenu>
       {status === DATA_LOADED && (
         <Card className={classes.root}>
           <CardMedia
@@ -49,7 +49,7 @@ const ProductPage = () => {
           </CardContent>
         </Card>
       )}
-    </MainEmptyLayout>
+    </EmptyLayoutWithMenu>
   );
 };
 
