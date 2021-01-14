@@ -1,10 +1,10 @@
 import React from 'react';
-import CartHeader from '@/components/ui/Header/CartHeader/CartHeader';
 import Footer from '@/components/ui/Footer/Footer';
+import MainHeader from '@/components/ui/Header/MainHeader/MainHeader';
 
 const EmptyLayout = ({ children }) => (
   <>
-    <CartHeader />
+    <MainHeader />
     <main role="main">
       <div className="container">
         <div className="row justify-content-center">

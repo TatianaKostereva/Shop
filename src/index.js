@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import CartPage from '@/page/CartPage';
 import DBCart from '@/db/DBCart';
 import MainPage from '@/page/MainPage';
+import ProductPage from '@/page/ProductPage';
+
 import {
   HashRouter as Router,
   Switch,
@@ -13,18 +15,21 @@ import DBComponent from '@/db/DBComponent';
 
 ReactDOM.render(
   (
-    <Router>
-      <DBComponent>
-        <DBCurrency>
-          <DBCart>
+    <DBComponent>
+      <DBCurrency>
+        <DBCart>
+
+          <Router>
             <Switch>
               <Route exact path="/" component={MainPage} />
               <Route exact path="/cart" component={CartPage} />
+              <Route exact path="/product/:id" component={ProductPage} />
             </Switch>
-          </DBCart>
-        </DBCurrency>
-      </DBComponent>
-    </Router>
+          </Router>
+
+        </DBCart>
+      </DBCurrency>
+    </DBComponent>
   ),
   document.querySelector('#root'),
 );

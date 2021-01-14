@@ -19,7 +19,6 @@ const MainPage = () => {
       });
   });
 
-
   return (
     <MainEmptyLayout>
       <ProductList ids={idsList} />
