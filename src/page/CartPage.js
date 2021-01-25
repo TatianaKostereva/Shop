@@ -18,14 +18,16 @@ const CartPage = () => {
 
   return (
     <EmptyLayout>
-      <h3 className="h5 mb-4 mt-4 text-md-center">Your order</h3>
-      <div className="alert alert-primary" role="alert">
-        Your order has been confirmed. The confirmation email is sent to you address
-      </div>
-      <div className="product-list-box-wrapper">
-        <CheckoutProductList
-          products={products}
-        />
+      <div className="cart col-lg-10">
+        <h3 className="h5 mb-4 mt-4 text-md-center">Your order</h3>
+        <div className="alert alert-primary" role="alert">
+          Your order has been confirmed. The confirmation email is sent to you address
+        </div>
+        <div className="product-list-box-wrapper">
+          <CheckoutProductList
+            products={products}
+          />
+        </div>
       </div>
     </EmptyLayout>
   );

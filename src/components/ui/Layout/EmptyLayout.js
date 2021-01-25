@@ -8,9 +8,7 @@ const EmptyLayout = ({ children }) => (
     <main role="main">
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-lg-10">
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </main>

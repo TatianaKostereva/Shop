@@ -3,7 +3,7 @@ import Carousel from '@/components/ui/Carousel/Carousel';
 import loadSlides from '@/services/loadSlides';
 import EmptyLayoutWithMenu from '@/components/ui/Layout/EmptyLayoutWithMenu';
 
-const MainEmptyLayout = ({ children, }) => {
+const MainEmptyLayout = ({ children }) => {
   const [slides, setSlides] = useState([]);
 
   useEffect(() => {
@@ -12,8 +12,10 @@ const MainEmptyLayout = ({ children, }) => {
 
   return (
     <EmptyLayoutWithMenu>
-      {slides && <Carousel slides={slides} />}
-      {children}
+      <div className="col-lg-9 carousel">
+        {slides && <Carousel slides={slides} />}
+        {children}
+      </div>
     </EmptyLayoutWithMenu>
   );
 };

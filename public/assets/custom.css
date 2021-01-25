@@ -1418,3 +1418,21 @@ button.product-add-to-cart:hover {
 .showMore:hover {
     background-color: #e9e9e9;
 }
+
+.cart.col-lg-10 {
+    display: flex;
+    flex-direction: column;
+}
+
+.main.col-lg-10 {
+    display: flex;
+    flex-direction: row;
+}
+
+.col-lg-9 {
+    flex-grow: 1;
+    width: 690px;
+    max-width: 100%;
+}
+
+

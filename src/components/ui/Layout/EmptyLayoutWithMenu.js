@@ -15,16 +15,14 @@ const EmptyLayoutWithMenu = ({ children }) => {
   return (
     <EmptyLayout>
       <div className={backDropClassName} />
-      <div className="col-lg-3 main-menu">
-        {menu && <Menu menu={menu} setShowBackDrop={setShowBackDrop} />}
-      </div>
-      <div className="col-lg-9 carousel">
+      <div className="main col-lg-10">
+        <div className="col-lg-3 main-menu">
+          {menu && <Menu menu={menu} setShowBackDrop={setShowBackDrop} />}
+        </div>
         {children}
       </div>
     </EmptyLayout>
-  )
-
-}
-
+  );
+};
 
 export default EmptyLayoutWithMenu;
