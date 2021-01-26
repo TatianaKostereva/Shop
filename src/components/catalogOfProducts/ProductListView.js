@@ -4,8 +4,19 @@ import { DBCartContext } from '@/db/DBCart';
 import { DATA_SOURCE_PRODUCT } from '@/db/dataSourceConfig';
 import ProductRate from '@/components/products/rate/ProductRate';
 import DataSourceProvider from '@/db/DataSourceProvider/DataSourceProvider';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  cardTitle: {
+    fontSize: theme.fontSizes.mainTitle,
+    lineHeight: '19px',
+    fontWeight: 500,
+    marginBottom: '1.25rem',
+  },
+}));
 
 const ProductListView = ({ data: product }) => {
+  const styles = useStyles();
   const { addToCart } = useContext(DBCartContext);
 
   const handleAddProduct = useCallback(() => {
@@ -19,7 +30,7 @@ const ProductListView = ({ data: product }) => {
           <img className="card-img-top" src={product.imageUrl} alt="Card image cap" />
         </div>
         <div className="card-body">
-          <h5 className="card-title">{product.title}</h5>
+          <h5 className={styles.cardTitle}>{product.title}</h5>
           <ProductRate key={product.id} id={product.id} />
           <Price key={product.title} product={product} />
           <button

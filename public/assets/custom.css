@@ -632,13 +632,6 @@ form button[type="submit"]:not(.btn-send) {
     flex-direction: column;
 }
 
-.homepage-cards .card .card-title {
-    font-size: 18px;
-    line-height: 19px;
-    font-weight: 500;
-    margin-bottom: 1.25rem;
-}
-
 .price-text {
     display: flex;
     align-items: center;
@@ -1427,6 +1420,12 @@ button.product-add-to-cart:hover {
 .main.col-lg-10 {
     display: flex;
     flex-direction: row;
+}
+
+@media (max-width: 992px) {
+    .main.col-lg-10 {
+        flex-direction: column;
+    }
 }
 
 .col-lg-9 {
