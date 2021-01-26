@@ -15,22 +15,11 @@ import {
 } from 'react-router-dom';
 import DBCurrency from '@/db/DBCurrency';
 import DBComponent from '@/db/DBComponent';
-
-const bigTheme = createMuiTheme({
-  fontSizes: {
-    mainTitle: '20px',
-  },
-});
-
-const smallTheme = createMuiTheme({
-  fontSizes: {
-    mainTitle: '10px',
-  },
-});
+import MyTheme from '@/MyTheme';
 
 ReactDOM.render(
   (
-    <ThemeProvider theme={smallTheme}>
+    <MyTheme>
       <DBComponent>
         <DBCurrency>
           <DBCart>
@@ -45,7 +34,7 @@ ReactDOM.render(
           </DBCart>
         </DBCurrency>
       </DBComponent>
-    </ThemeProvider>
+    </MyTheme>
   ),
   document.querySelector('#root'),
 );
