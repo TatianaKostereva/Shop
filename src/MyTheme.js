@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 export const MyThemeContext = React.createContext(
   [],
@@ -17,13 +17,23 @@ const smallTheme = createMuiTheme({
   },
 });
 
+export const BIG_THEME_KEY = 'bigTheme';
+export const SMALL_THEME_KEY = 'smallTheme';
+
+const map = {
+  [BIG_THEME_KEY]: bigTheme,
+  [SMALL_THEME_KEY]: smallTheme,
+};
+
 const MyTheme = ({ children }) => {
-  const [theme, setTheme] = useState(smallTheme);
+  const [themeKey, setTheme] = useState(BIG_THEME_KEY);
 
   return (
-    <MyTheme.Provider value={theme}>
-      {children}
-    </MyTheme.Provider>
+    <MyThemeContext.Provider value={setTheme}>
+      <ThemeProvider theme={map[themeKey]}>
+        {children}
+      </ThemeProvider>
+    </MyThemeContext.Provider>
   );
 };
 

@@ -1,9 +1,12 @@
 import React, { useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { DBCurrencyContext } from '@/db/DBCurrency';
+import { BIG_THEME_KEY, MyThemeContext, SMALL_THEME_KEY } from '@/MyTheme';
 
 const MainHeader = () => {
-  const { list, setCurrent, currency, loaded } = useContext(DBCurrencyContext);
+  const {
+    list, setCurrent, currency, loaded,
+  } = useContext(DBCurrencyContext);
 
   const choiceCurrency = useCallback((event) => {
     const { target } = event;
@@ -11,6 +14,8 @@ const MainHeader = () => {
 
     setCurrent(currentCurrency);
   }, [setCurrent]);
+
+  const setTheme = useContext(MyThemeContext);
 
   return (
     <header>
@@ -76,6 +81,14 @@ const MainHeader = () => {
                 </form>
               </li>
             </ul>
+          </div>
+          <div className="buttons for theme">
+            <a onClick={() => setTheme(BIG_THEME_KEY)}>
+              <img src="/assets/images/icons-magnifying-glass-increase.png" />
+            </a>
+            <a onClick={() => setTheme(SMALL_THEME_KEY)}>
+              <img src="/assets/images/icons-magnifying-glass-decrease.png" />
+            </a>
           </div>
           {loaded && (
             <div className="currency">
